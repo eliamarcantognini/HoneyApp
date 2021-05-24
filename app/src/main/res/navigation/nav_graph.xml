@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.eliamarcantognini.honeyapp.ui.home.HomeFragment"
+        android:label="main_fragment"
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_leaderboardFragment"
+            app:destination="@id/leaderboardFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_scanboardFragment"
+            app:destination="@id/scanboardFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_statusFragment2"
+            app:destination="@id/statusFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_scannerFragment"
+            app:destination="@id/scannerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/leaderboardFragment"
+        android:name="com.eliamarcantognini.honeyapp.ui.menu.leaderboard.LeaderboardFragment"
+        android:label="leaderboard_fragment"
+        tools:layout="@layout/leaderboard_fragment" />
+    <fragment
+        android:id="@+id/scanboardFragment"
+        android:name="com.eliamarcantognini.honeyapp.ui.menu.scanboard.ScanboardFragment"
+        android:label="scanboard_fragment"
+        tools:layout="@layout/scanboard_fragment" />
+    <fragment
+        android:id="@+id/scannerFragment"
+        android:name="com.eliamarcantognini.honeyapp.ui.menu.scanner.ScannerFragment"
+        android:label="scanner_fragment"
+        tools:layout="@layout/scanner_fragment" />
+    <fragment
+        android:id="@+id/statusFragment"
+        android:name="com.eliamarcantognini.honeyapp.ui.menu.status.StatusFragment"
+        android:label="status_fragment"
+        tools:layout="@layout/status_fragment" />
+</navigation>

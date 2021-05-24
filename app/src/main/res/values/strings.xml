@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">HoneyApp</string>
+    <string name="scan_qr_code">Scan QR Code</string>
+    <string name="status">Status</string>
+    <string name="classifica">Classifica</string>
+    <string name="i_miei_scan">I miei scan</string>
+    <string name="posizione">Posizione</string>
+    <string name="posizione_upper">POSIZIONE</string>
+    <string name="scan">SCAN</string>
+    <string name="punti">PUNTI</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
