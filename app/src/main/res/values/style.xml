@@ -3,4 +3,13 @@
     <style name="ShapeAppearanceOverlay.App.CornerSize" parent="">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="CustomMaterialDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!-- Background Color-->
+        <item name="android:background">@color/white</item>
+        <!-- Text Color for title and message -->
+        <item name="colorOnSurface">@color/primaryTextColor</item>
+        <!-- Text Color for buttons -->
+        <item name="colorPrimary">@color/primaryDarkColor</item>
+    </style>
 </resources>

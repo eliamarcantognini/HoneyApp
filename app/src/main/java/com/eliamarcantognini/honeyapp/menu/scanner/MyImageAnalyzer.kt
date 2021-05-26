@@ -1,17 +1,22 @@
-package com.eliamarcantognini.honeyapp.utils
+package com.eliamarcantognini.honeyapp.menu.scanner
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import com.google.mlkit.vision.barcode.Barcode
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
-@ExperimentalSerializationApi
-class MyImageAnalyzer : ImageAnalysis.Analyzer {
+class MyImageAnalyzer(
+    private var fragmentActivity: FragmentActivity,
+) : ImageAnalysis.Analyzer {
+
+    private lateinit var scannerViewModel: ScannerViewModel
+
     override fun analyze(image: ImageProxy) {
         scanBarcode(image)
     }
@@ -19,8 +24,10 @@ class MyImageAnalyzer : ImageAnalysis.Analyzer {
     @SuppressLint("UnsafeOptInUsageError")
     private fun scanBarcode(imageProxy: ImageProxy) {
         imageProxy.image?.let { image ->
+            val options =
+                BarcodeScannerOptions.Builder().setBarcodeFormats(Barcode.FORMAT_QR_CODE).build()
             val inputImage = InputImage.fromMediaImage(image, imageProxy.imageInfo.rotationDegrees)
-            val scanner = BarcodeScanning.getClient()
+            val scanner = BarcodeScanning.getClient(options)
             scanner.process(inputImage)
                 .addOnCompleteListener {
                     imageProxy.close()
@@ -34,12 +41,15 @@ class MyImageAnalyzer : ImageAnalysis.Analyzer {
     }
 
     private fun readBarcodeData(barcodes: List<Barcode>) {
+        scannerViewModel = ViewModelProvider(fragmentActivity).get(ScannerViewModel::class.java)
         for (barcode in barcodes) {
             when (barcode.valueType) {
                 Barcode.TYPE_TEXT -> {
                     val json = barcode.displayValue
                     val honey = Json.decodeFromString<Honey>(Honey.serializer(), json)
-                    Log.d("PROVASCAN", "${honey.firmName} ${honey.address} ${honey.cap} ${honey.city} ${honey.honeyDescription} ${honey.cap} ${honey.honeyName} ${honey.site} ${honey.telephoneNumber}")
+                    scannerViewModel.update(honey)
+//                    scannerViewModel.onScanResult()
+
                 }
             }
         }

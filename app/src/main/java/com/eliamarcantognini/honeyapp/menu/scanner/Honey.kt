@@ -1,4 +1,4 @@
-package com.eliamarcantognini.honeyapp.utils
+package com.eliamarcantognini.honeyapp.menu.scanner
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -20,9 +20,9 @@ data class Honey(
     @SerialName("cap")
     val cap: String, // CAP
     @SerialName("name")
-    val honeyName: String, // Honey name
+    val name: String, // Honey name
     @SerialName("desc")
-    val honeyDescription: String // Honey description
+    val description: String // Honey description
 ) {
 
 }

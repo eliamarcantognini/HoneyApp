@@ -1,20 +1,20 @@
-package com.eliamarcantognini.honeyapp.ui.menu.leaderboard
+package com.eliamarcantognini.honeyapp.menu.leaderboard
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.eliamarcantognini.honeyapp.R
-import com.eliamarcantognini.honeyapp.databinding.HomeFragmentBinding
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.eliamarcantognini.honeyapp.databinding.LeaderboardFragmentBinding
 
 class LeaderboardFragment : Fragment() {
 
-    private var _binding : LeaderboardFragmentBinding? = null
+    private var _binding: LeaderboardFragmentBinding? = null
+
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
+
     companion object {
         fun newInstance() = LeaderboardFragment()
     }
@@ -26,7 +26,7 @@ class LeaderboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = LeaderboardFragmentBinding.inflate(inflater, container, false)
-        val root : View = binding.root
+        val root: View = binding.root
 
         return root
     }

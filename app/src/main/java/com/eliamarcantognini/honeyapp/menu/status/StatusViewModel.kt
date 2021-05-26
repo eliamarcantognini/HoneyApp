@@ -1,4 +1,4 @@
-package com.eliamarcantognini.honeyapp.ui.menu.status
+package com.eliamarcantognini.honeyapp.menu.status
 
 import androidx.lifecycle.ViewModel
 

@@ -1,4 +1,4 @@
-package com.eliamarcantognini.honeyapp.ui.menu.scanboard
+package com.eliamarcantognini.honeyapp.menu.scanboard
 
 import androidx.lifecycle.ViewModel
 

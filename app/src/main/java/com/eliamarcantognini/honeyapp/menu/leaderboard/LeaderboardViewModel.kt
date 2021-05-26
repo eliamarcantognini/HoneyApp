@@ -1,4 +1,4 @@
-package com.eliamarcantognini.honeyapp.ui.menu.leaderboard
+package com.eliamarcantognini.honeyapp.menu.leaderboard
 
 import androidx.lifecycle.ViewModel
 
