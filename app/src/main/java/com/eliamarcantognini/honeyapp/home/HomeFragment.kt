@@ -21,6 +21,7 @@ import com.eliamarcantognini.honeyapp.AccountViewModel
 import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.HomeFragmentBinding
 import com.eliamarcantognini.honeyapp.menu.scanner.ScanResultFragmentDirections
+import com.google.android.gms.common.images.ImageManager
 import com.google.android.gms.games.Games
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -87,7 +88,6 @@ class HomeFragment : Fragment() {
                     .addOnSuccessListener {
                         activity.startActivityFromFragment(this@HomeFragment, it, RC_ACHIEVEMENT_UI)
                     }
-//                navController.navigate(HomeFragmentDirections.actionMainFragmentToStatusFragment())
             }
             leaderboardCard.setOnClickListener {
                 Games.getLeaderboardsClient(activity, viewModel.account.value!!)
@@ -95,15 +95,14 @@ class HomeFragment : Fragment() {
                     .addOnSuccessListener {
                         activity.startActivityFromFragment(this@HomeFragment, it, RC_LEADERBOARD_UI)
                     }
-//                navController.navigate(HomeFragmentDirections.actionMainFragmentToLeaderboardFragment())
             }
             scanboardCard.setOnClickListener { navController.navigate(HomeFragmentDirections.actionMainFragmentToScanboardFragment()) }
             Log.i("AIUTO2", "${viewModel.player.value?.name}")
             nameProfileTxt.text = viewModel.name
             locationProfileTxt.text = viewModel.displayName
-//            statusTxt.text = viewModel.player.value?.title
             pointProfileTxt.text = viewModel.playerLevel?.levelNumber.toString()
-//            profileImg.setImageURI(viewModel.imageUri)
+            val imageManager = ImageManager.create(requireContext())
+            imageManager.loadImage(profileImg, viewModel.imageUri)
         }
 
     }
