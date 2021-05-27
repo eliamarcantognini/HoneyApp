@@ -11,9 +11,6 @@
         android:label="main_fragment"
         tools:layout="@layout/home_fragment" >
         <action
-            android:id="@+id/action_mainFragment_to_leaderboardFragment"
-            app:destination="@id/leaderboardFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_scanboardFragment"
             app:destination="@id/scanboardFragment" />
         <action
@@ -22,12 +19,11 @@
         <action
             android:id="@+id/action_mainFragment_to_scannerFragment"
             app:destination="@id/scannerFragment" />
+        <action
+            android:id="@+id/action_mainFragment_pop"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
     </fragment>
-    <fragment
-        android:id="@+id/leaderboardFragment"
-        android:name="com.eliamarcantognini.honeyapp.menu.leaderboard.LeaderboardFragment"
-        android:label="leaderboard_fragment"
-        tools:layout="@layout/leaderboard_fragment" />
     <fragment
         android:id="@+id/scanboardFragment"
         android:name="com.eliamarcantognini.honeyapp.menu.scanboard.ScanboardFragment"
@@ -63,6 +59,9 @@
         tools:layout="@layout/login_fragment" >
         <action
             android:id="@+id/action_splashFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

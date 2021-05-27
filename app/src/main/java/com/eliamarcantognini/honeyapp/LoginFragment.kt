@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,10 +26,12 @@ class LoginFragment : Fragment() {
     private var _binding: LoginFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var googleSignInClient: GoogleSignInClient
-//    private lateinit var googleSignInOptions: GoogleSignInOptions
+
+    //    private lateinit var googleSignInOptions: GoogleSignInOptions
 //    private lateinit var googleSignInAccount: GoogleSignInAccount
     private lateinit var gamesClient: GamesClient
-//    private lateinit var oneTapClient: SignInClient
+
+    //    private lateinit var oneTapClient: SignInClient
 //    private lateinit var signInRequest: BeginSignInRequest
     private lateinit var navController: NavController
     private lateinit var viewModel: AccountViewModel
@@ -57,7 +58,8 @@ class LoginFragment : Fragment() {
 //            .requestProfile()
 //            .build()
 //        googleSignInAccount = GoogleSignIn.getLastSignedInAccount(context)!!
-        googleSignInClient = GoogleSignIn.getClient(requireContext(), GoogleSignInOptions.DEFAULT_SIGN_IN)
+        googleSignInClient =
+            GoogleSignIn.getClient(requireContext(), GoogleSignInOptions.DEFAULT_SIGN_IN)
         signInSilently()
 
 

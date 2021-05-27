@@ -2,7 +2,6 @@ package com.eliamarcantognini.honeyapp.home
 
 import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,15 +10,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.eliamarcantognini.honeyapp.AccountViewModel
 import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.HomeFragmentBinding
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.eliamarcantognini.honeyapp.menu.scanner.ScanResultFragmentDirections
 import com.google.android.gms.games.Games
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -38,6 +39,15 @@ class HomeFragment : Fragment() {
     private val RC_LEADERBOARD_UI = 102
     private val RC_ACHIEVEMENT_UI = 103
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // This callback will only be called when MyFragment is at least Started.
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            parentFragment?.let {
+                requireActivity().finishAffinity()
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,7 +93,8 @@ class HomeFragment : Fragment() {
                 Games.getLeaderboardsClient(activity, viewModel.account.value!!)
                     .getLeaderboardIntent(getString(R.string.leaderboard_id))
                     .addOnSuccessListener {
-                        activity.startActivityFromFragment(this@HomeFragment, it, RC_LEADERBOARD_UI) }
+                        activity.startActivityFromFragment(this@HomeFragment, it, RC_LEADERBOARD_UI)
+                    }
 //                navController.navigate(HomeFragmentDirections.actionMainFragmentToLeaderboardFragment())
             }
             scanboardCard.setOnClickListener { navController.navigate(HomeFragmentDirections.actionMainFragmentToScanboardFragment()) }
@@ -120,20 +131,3 @@ class HomeFragment : Fragment() {
     }
 
 }
-//
-//private fun View.showSnackbar(
-//    view: View,
-//    msg: String,
-//    length: Int,
-//    actionMessage: CharSequence?,
-//    action: (View) -> Unit
-//) {
-//    val snackbar = Snackbar.make(view, msg, length)
-//    if (actionMessage != null) {
-//        snackbar.setAction(actionMessage) {
-//            action(this)
-//        }.show()
-//    } else {
-//        snackbar.show()
-//    }
-//}

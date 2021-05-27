@@ -26,7 +26,6 @@ class ScanResultFragment : Fragment() {
                 NavHostFragment.findNavController(it)
                     .navigate(ScanResultFragmentDirections.actionScanResultFragmentToMainFragment())
             }
-
         }
     }
 

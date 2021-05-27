@@ -1,15 +1,12 @@
 package com.eliamarcantognini.honeyapp
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.games.Player
 import com.google.android.gms.games.PlayerLevel
-import com.google.android.gms.games.PlayerLevelInfo
-import kotlin.math.sign
 
 class AccountViewModel : ViewModel() {
 
@@ -21,20 +18,19 @@ class AccountViewModel : ViewModel() {
     val player: LiveData<Player>
         get() = _player
 
-    val name : String?
+    val name: String?
         get() = _player.value?.name
 
 
-    val displayName : String?
+    val displayName: String?
         get() = _player.value?.displayName
 
 
-    val imageUri : Uri?
+    val imageUri: Uri?
         get() = _player.value?.hiResImageUri
 
-    val playerLevel : PlayerLevel?
+    val playerLevel: PlayerLevel?
         get() = _player.value?.levelInfo?.currentLevel
-
 
 
 //    init {
