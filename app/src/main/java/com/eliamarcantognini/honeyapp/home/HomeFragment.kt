@@ -2,6 +2,7 @@ package com.eliamarcantognini.honeyapp.home
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,7 +15,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.eliamarcantognini.honeyapp.AccountViewModel
+import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.HomeFragmentBinding
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.games.Games
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class HomeFragment : Fragment() {
@@ -23,12 +29,14 @@ class HomeFragment : Fragment() {
         fun newInstance() = HomeFragment()
     }
 
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var viewModel: AccountViewModel
     private lateinit var layout: View
     private var _binding: HomeFragmentBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
+    private val RC_LEADERBOARD_UI = 102
+    private val RC_ACHIEVEMENT_UI = 103
 
 
     override fun onCreateView(
@@ -36,6 +44,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = HomeFragmentBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(requireActivity()).get(AccountViewModel::class.java)
         val root: View = binding.root
         layout = binding.homeFragment
 
@@ -44,7 +53,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val activity = requireActivity()
         val navController = requireView().findNavController()
 
@@ -61,28 +69,41 @@ class HomeFragment : Fragment() {
                 }
             }
 
-        binding.scanBtn.setOnClickListener {
-            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-        }
-
-        binding.statusCard.setOnClickListener {
-            val action = HomeFragmentDirections.actionMainFragmentToStatusFragment()
-            navController.navigate(action)
-        }
-
-        binding.leaderboardCard.setOnClickListener {
-            val action = HomeFragmentDirections.actionMainFragmentToLeaderboardFragment()
-            navController.navigate(action)
-        }
-
-        binding.scanboardCard.setOnClickListener {
-            val action = HomeFragmentDirections.actionMainFragmentToScanboardFragment()
-            navController.navigate(HomeFragmentDirections.actionMainFragmentToScanboardFragment())
+        binding.apply {
+            scanBtn.setOnClickListener { requestPermissionLauncher.launch(Manifest.permission.CAMERA) }
+            statusCard.setOnClickListener {
+                Games.getAchievementsClient(activity, viewModel.account.value!!)
+                    .achievementsIntent
+                    .addOnSuccessListener {
+                        activity.startActivityFromFragment(this@HomeFragment, it, RC_ACHIEVEMENT_UI)
+                    }
+//                navController.navigate(HomeFragmentDirections.actionMainFragmentToStatusFragment())
+            }
+            leaderboardCard.setOnClickListener {
+                Games.getLeaderboardsClient(activity, viewModel.account.value!!)
+                    .getLeaderboardIntent(getString(R.string.leaderboard_id))
+                    .addOnSuccessListener {
+                        activity.startActivityFromFragment(this@HomeFragment, it, RC_LEADERBOARD_UI) }
+//                navController.navigate(HomeFragmentDirections.actionMainFragmentToLeaderboardFragment())
+            }
+            scanboardCard.setOnClickListener { navController.navigate(HomeFragmentDirections.actionMainFragmentToScanboardFragment()) }
+            Log.i("AIUTO2", "${viewModel.player.value?.name}")
+            nameProfileTxt.text = viewModel.name
+            locationProfileTxt.text = viewModel.displayName
+//            statusTxt.text = viewModel.player.value?.title
+            pointProfileTxt.text = viewModel.playerLevel?.levelNumber.toString()
+//            profileImg.setImageURI(viewModel.imageUri)
         }
 
     }
 
-    fun showDialog(activity: Activity) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RC_LEADERBOARD_UI) {
+
+        }
+    }
+
+    private fun showDialog(activity: Activity) {
         val builder = MaterialAlertDialogBuilder(activity)
         builder.setMessage("È necessario autorizzare l'accesso alla Fotocamera per scannerizzare il QR Code")
             .setTitle("Autorizzazione richiesta")

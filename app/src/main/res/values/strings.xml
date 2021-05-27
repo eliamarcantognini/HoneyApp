@@ -14,4 +14,10 @@
     <string name="ok">OK</string>
     <string name="permission_granted">Permission is granted. You can use the camera now.</string>
     <string name="app_id">340301525584</string>
+    <string name="title_activity_sign_in">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="web_client_id">111</string>
+    <string name="leaderboard_id">CgkI0OS03PMJEAIQAg</string>
+    <string name="obiettivi">Obiettivi</string>
 </resources>

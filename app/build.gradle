@@ -64,8 +64,8 @@ dependencies {
     // Kotlin Serialization
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
     // Game services
-    implementation 'com.google.android.gms:play-services-games:18.0.1'
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.android.gms:play-services-games:21.0.0'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
     // Testing
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

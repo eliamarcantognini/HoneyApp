@@ -195,7 +195,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="32dp"
                     android:layout_marginBottom="16dp"
-                    android:text="@string/status"
+                    android:text="@string/obiettivi"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:textColor="@color/secondaryTextColor"
                     android:textSize="20sp"
