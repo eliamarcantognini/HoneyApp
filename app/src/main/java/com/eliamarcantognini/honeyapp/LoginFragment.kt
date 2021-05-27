@@ -52,15 +52,16 @@ class LoginFragment : Fragment() {
         navController = NavHostFragment.findNavController(this)
 
         viewModel = ViewModelProvider(requireActivity()).get(AccountViewModel::class.java)
-
-//        googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestId()
-//            .requestProfile()
-//            .build()
-//        googleSignInAccount = GoogleSignIn.getLastSignedInAccount(context)!!
         googleSignInClient =
             GoogleSignIn.getClient(requireContext(), GoogleSignInOptions.DEFAULT_SIGN_IN)
+        binding.apply {
+            btnSignIn.setOnClickListener {
+                val signInIntent = googleSignInClient.signInIntent
+                requireActivity().startActivityFromFragment(this@LoginFragment, signInIntent, RC_SIGN_IN)
+            }
+        }
         signInSilently()
+
 
 
         // ONE TAP
