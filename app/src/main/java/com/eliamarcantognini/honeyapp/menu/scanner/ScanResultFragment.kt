@@ -1,5 +1,7 @@
 package com.eliamarcantognini.honeyapp.menu.scanner
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -39,16 +41,30 @@ class ScanResultFragment : Fragment() {
         binding.apply {
             honeyNameTxt.text = viewModel.honey.value?.name
             honeyDescTxt.text = viewModel.honey.value?.description
+            firmTxt.text = viewModel.honey.value?.firmName
             if (viewModel.honey.value?.site != null) {
                 siteBtn.setOnClickListener { _ ->
                     // Creo l'intent per andare su internet
                 }
             }
+
             callBtn.setOnClickListener {
-                // Creo l'intent per aprire il dialer
+                val intent = Intent(Intent.ACTION_VIEW).apply {
+                    data = Uri.parse(viewModel.honey.value?.telephoneNumber)
+                }
             }
+            // Location intent which opens a map app with the address given
             locationBtn.setOnClickListener {
-                // Creo l'intent per aprire maps
+                val geo = Uri.parse(
+                    "geo:0,0?q=" + Uri.encode(viewModel.honey.value?.address) + Uri.encode(", ") + Uri.encode(
+                        viewModel.honey.value?.city
+                    )
+                )
+                val intent = Intent(Intent.ACTION_VIEW).apply {
+                    data = geo
+//                    `package` = "com.google.android.apps.maps"
+                }
+                startActivity(intent)
             }
         }
         return binding.root

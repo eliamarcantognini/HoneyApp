@@ -95,9 +95,9 @@ class LoginFragment : Fragment() {
         if (GoogleSignIn.hasPermissions(account, *signInOptions.scopeArray)) {
             // Already signed in.
             // The signed in account is stored in the 'account' variable.
-            val gamesClient = Games.getGamesClient(context, account)
+            val gamesClient = Games.getGamesClient(context, account!!)
             gamesClient.setViewForPopups(requireView())
-            account?.let { updatePlayerInformation(context, it) }
+            updatePlayerInformation(context, account)
         } else {
             // Haven't been signed-in before. Try the silent sign-in first.
             val signInClient = GoogleSignIn.getClient(activity, signInOptions)
@@ -132,7 +132,7 @@ class LoginFragment : Fragment() {
                 val signedInAccount = result.signInAccount
                 signedInAccount?.let { updatePlayerInformation(requireContext(), it) }
             } else {
-                var message = result!!.status.statusMessage
+                var message = result.status.statusMessage
                 if (message == null || message.isEmpty()) {
                     message = "Accedi"
                 }

@@ -39,6 +39,7 @@
                 android:layout_marginTop="16dp"
                 android:padding="4dp"
                 android:scaleType="centerCrop"
+                app:contentPadding="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -53,14 +54,16 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/white"
+                android:background="@color/primaryLightColor"
+                android:elevation="8dp"
                 android:padding="4dp"
                 android:scaleType="centerCrop"
+                app:contentPadding="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/siteBtn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize"
-                app:srcCompat="@drawable/logo"
+                app:srcCompat="@drawable/outline_place_black_48"
                 app:strokeColor="@color/secondaryTextColor"
                 app:strokeWidth="2dp" />
 
@@ -69,13 +72,16 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="16dp"
+                android:background="@color/primaryLightColor"
+                android:elevation="8dp"
                 android:padding="4dp"
                 android:scaleType="centerCrop"
+                app:contentPadding="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/callBtn"
                 app:layout_constraintStart_toEndOf="@+id/locationBtn"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize"
-                app:srcCompat="@drawable/logo"
+                app:srcCompat="@drawable/outline_language_black_48"
                 app:strokeColor="@color/secondaryTextColor"
                 app:strokeWidth="2dp" />
 
@@ -85,13 +91,16 @@
                 android:layout_height="50dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="16dp"
+                android:background="@color/primaryLightColor"
+                android:elevation="8dp"
                 android:padding="4dp"
                 android:scaleType="centerCrop"
+                app:contentPadding="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/siteBtn"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize"
-                app:srcCompat="@drawable/femaleavatar"
+                app:srcCompat="@drawable/outline_phone_black_48"
                 app:strokeColor="@color/secondaryTextColor"
                 app:strokeWidth="2dp" />
 
@@ -101,6 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Nome Miele"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/honeyImg" />
@@ -114,6 +124,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/honeyNameTxt" />
+
+            <TextView
+                android:id="@+id/firmTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/honeyDescTxt" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
