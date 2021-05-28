@@ -43,15 +43,20 @@ class ScanResultFragment : Fragment() {
             honeyDescTxt.text = viewModel.honey.value?.description
             firmTxt.text = viewModel.honey.value?.firmName
             if (viewModel.honey.value?.site != null) {
+                siteBtn.visibility = View.VISIBLE
                 siteBtn.setOnClickListener { _ ->
-                    // Creo l'intent per andare su internet
+                    val intent = Intent(Intent.ACTION_VIEW).apply {
+                        data = Uri.parse("https:" + viewModel.honey.value?.site)
+                    }
+                    startActivity(intent)
                 }
             }
 
             callBtn.setOnClickListener {
-                val intent = Intent(Intent.ACTION_VIEW).apply {
-                    data = Uri.parse(viewModel.honey.value?.telephoneNumber)
+                val intent = Intent(Intent.ACTION_DIAL).apply {
+                    data = Uri.parse("tel:" + viewModel.honey.value?.telephoneNumber)
                 }
+                startActivity(intent)
             }
             // Location intent which opens a map app with the address given
             locationBtn.setOnClickListener {
