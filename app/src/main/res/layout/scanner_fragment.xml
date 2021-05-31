@@ -8,7 +8,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000000">
+        android:background="@color/black">
 
         <androidx.camera.view.PreviewView
             android:id="@+id/previewView"
@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="140dp"
-                android:text="QR Code Reader Android\nusing ML Kit"
+                android:text="@string/scan_string"
                 android:textAlignment="center"
                 android:textColor="#FAFAFA"
                 android:textSize="24sp" />

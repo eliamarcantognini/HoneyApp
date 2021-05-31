@@ -10,6 +10,7 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.ScanResultFragmentBinding
 
 class ScanResultFragment : Fragment() {
@@ -34,24 +35,34 @@ class ScanResultFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = ScanResultFragmentBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(requireActivity()).get(ScannerViewModel::class.java)
         binding.apply {
-            honeyNameTxt.text = viewModel.honey.value?.name
+            when (viewModel.honey.value?.type) {
+                0 -> honeyNameTxt.text = getString(R.string.millefiori)
+                1 -> honeyNameTxt.text = getString(R.string.castagno)
+                2 -> honeyNameTxt.text = getString(R.string.acacia)
+                3 -> honeyNameTxt.text = getString(R.string.eucalipto)
+                4 -> honeyNameTxt.text = getString(R.string.girasole)
+                5 -> honeyNameTxt.text = getString(R.string.agrumi)
+                6 -> honeyNameTxt.text = getString(R.string.timo)
+                7 -> honeyNameTxt.text = getString(R.string.tiglio)
+                8 -> honeyNameTxt.text = getString(R.string.melata)
+                9 -> honeyNameTxt.text = getString(R.string.sulla)
+                10 -> honeyNameTxt.text = getString(R.string.altromiele)
+            }
             honeyDescTxt.text = viewModel.honey.value?.description
             firmTxt.text = viewModel.honey.value?.firmName
-            if (viewModel.honey.value?.site != null) {
+            // If the site is given, it renders the button to open the browser with the url given
+            viewModel.honey.value?.site?.let {
                 siteBtn.visibility = View.VISIBLE
                 siteBtn.setOnClickListener { _ ->
-                    val intent = Intent(Intent.ACTION_VIEW).apply {
-                        data = Uri.parse("https:" + viewModel.honey.value?.site)
-                    }
-                    startActivity(intent)
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https:$it")))
                 }
             }
-
+            // Dial intent which opens the dialer with the given telephone number
             callBtn.setOnClickListener {
                 val intent = Intent(Intent.ACTION_DIAL).apply {
                     data = Uri.parse("tel:" + viewModel.honey.value?.telephoneNumber)
@@ -65,11 +76,11 @@ class ScanResultFragment : Fragment() {
                         viewModel.honey.value?.city
                     )
                 )
-                val intent = Intent(Intent.ACTION_VIEW).apply {
-                    data = geo
+//                val intent = Intent(Intent.ACTION_VIEW).apply {
+//                    data = geo
 //                    `package` = "com.google.android.apps.maps"
-                }
-                startActivity(intent)
+//                }
+                startActivity(Intent(Intent.ACTION_VIEW, geo))
             }
         }
         return binding.root

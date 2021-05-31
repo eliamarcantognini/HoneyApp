@@ -17,7 +17,7 @@ class ScannerViewModel : ViewModel() {
 
     init {
         Log.i("ScannerViewModel", "Scanner created")
-        val initHoney = Honey("", "", "", "", "", "", "", "", "")
+        val initHoney = Honey("", "", "", "", "", "", "", 1, "")
         _honey.value = initHoney
         _eventScanResult.value = false
     }

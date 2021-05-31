@@ -17,8 +17,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.drive.Drive
+import com.google.android.gms.drive.DriveContents
+import com.google.android.gms.drive.DriveFolder
+import com.google.android.gms.drive.DriveResource
 import com.google.android.gms.games.Games
 import com.google.android.gms.games.GamesClient
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class LoginFragment : Fragment() {
@@ -27,7 +32,7 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var googleSignInClient: GoogleSignInClient
 
-    //    private lateinit var googleSignInOptions: GoogleSignInOptions
+//    private lateinit var googleSignInOptions: GoogleSignInOptions
 //    private lateinit var googleSignInAccount: GoogleSignInAccount
     private lateinit var gamesClient: GamesClient
 
@@ -52,8 +57,11 @@ class LoginFragment : Fragment() {
         navController = NavHostFragment.findNavController(this)
 
         viewModel = ViewModelProvider(requireActivity()).get(AccountViewModel::class.java)
+        val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+            .requestScopes(Drive.SCOPE_APPFOLDER)
+            .build()
         googleSignInClient =
-            GoogleSignIn.getClient(requireContext(), GoogleSignInOptions.DEFAULT_SIGN_IN)
+            GoogleSignIn.getClient(requireContext(), googleSignInOptions)
         binding.apply {
             btnSignIn.setOnClickListener {
                 val signInIntent = googleSignInClient.signInIntent
@@ -90,7 +98,8 @@ class LoginFragment : Fragment() {
     private fun signInSilently() {
         val activity = requireActivity()
         val context = requireContext()
-        val signInOptions = GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN
+        val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+            .requestScopes(Drive.SCOPE_APPFOLDER).build()
         val account = GoogleSignIn.getLastSignedInAccount(context)
         if (GoogleSignIn.hasPermissions(account, *signInOptions.scopeArray)) {
             // Already signed in.
@@ -134,10 +143,11 @@ class LoginFragment : Fragment() {
             } else {
                 var message = result.status.statusMessage
                 if (message == null || message.isEmpty()) {
-                    message = "Accedi"
+                    message = "Accedi per proseguire"
                 }
-                AlertDialog.Builder(requireContext()).setMessage(message)
-                    .setNeutralButton(R.string.ok, null).show()
+//                AlertDialog.Builder(requireContext()).setMessage(message)
+//                    .setNeutralButton(R.string.ok, null).show()
+                MaterialAlertDialogBuilder(requireContext()).setMessage(message).setNeutralButton("OK", null).show()
             }
         }
     }

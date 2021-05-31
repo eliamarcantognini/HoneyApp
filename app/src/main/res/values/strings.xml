@@ -20,4 +20,16 @@
     <string name="web_client_id">111</string>
     <string name="leaderboard_id">CgkI0OS03PMJEAIQAg</string>
     <string name="obiettivi">Obiettivi</string>
+    <string name="scan_string">Inquadra il QR Code</string>
+    <string name="millefiori">Miele Millefiori</string>
+    <string name="castagno">Miele di Castagno</string>
+    <string name="acacia">Miele di Acacia</string>
+    <string name="eucalipto">Miele di Eucalipto</string>
+    <string name="girasole">Miele di Girasole</string>
+    <string name="agrumi">Miele di Agrumi</string>
+    <string name="timo">Miele di Timo</string>
+    <string name="tiglio">Miele di Tiglio</string>
+    <string name="melata">Miele di Melata</string>
+    <string name="sulla">Miele di Sulla</string>
+    <string name="altromiele">Miele molto raro</string>
 </resources>

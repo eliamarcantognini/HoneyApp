@@ -7,21 +7,21 @@ import kotlinx.serialization.Serializable
 data class Honey(
     @SerialName("c")
     val controlChar: String? = null, // Control character
-    @SerialName("fName")
+    @SerialName("f")
     val firmName: String, // Firm name
-    @SerialName("site")
+    @SerialName("s")
     val site: String? = null, // Site url
-    @SerialName("num")
+    @SerialName("n")
     val telephoneNumber: String, // Telephone number
-    @SerialName("addr")
+    @SerialName("a")
     val address: String, // Address
-    @SerialName("city")
+    @SerialName("p")
     val city: String, // City
-    @SerialName("cap")
+    @SerialName("C")
     val cap: String, // CAP
-    @SerialName("name")
-    val name: String, // Honey name
-    @SerialName("desc")
+    @SerialName("h")
+    val type: Int, // Honey type
+    @SerialName("d")
     val description: String // Honey description
 ) {
 

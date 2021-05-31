@@ -18,4 +18,5 @@
     <string name="web_client_id">111</string>
     <string name="leaderboard_id">CgkI0OS03PMJEAIQAg</string>
     <string name="obiettivi">Obiettivi</string>
+    <string name="scan_string">Inquadra il QR Code</string>
 </resources>
