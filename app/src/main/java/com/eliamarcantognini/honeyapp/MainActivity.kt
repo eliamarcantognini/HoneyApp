@@ -31,37 +31,4 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-//        signInSilently()
-    }
-//
-//    private fun signInSilently() {
-//        val signInOptions = GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN
-//        val account = GoogleSignIn.getLastSignedInAccount(this)
-//        if (GoogleSignIn.hasPermissions(account, *signInOptions.scopeArray)) {
-//            // Already signed in.
-//            // The signed in account is stored in the 'account' variable.
-//            val signedInAccount = account
-//        } else {
-//            // Haven't been signed-in before. Try the silent sign-in first.
-//            val signInClient = GoogleSignIn.getClient(this, signInOptions)
-//            signInClient
-//                .silentSignIn()
-//                .addOnCompleteListener(
-//                    this
-//                ) { task ->
-//                    if (task.isSuccessful) {
-//                        // The signed in account is stored in the task's result.
-//                        val signedInAccount: GoogleSignInAccount = task.result
-//                    } else {
-//                        // Player will need to sign-in explicitly using via UI.
-//                        // See [sign-in best practices](http://developers.google.com/games/services/checklist) for guidance on how and when to implement Interactive Sign-in,
-//                        // and [Performing Interactive Sign-in](http://developers.google.com/games/services/android/signin#performing_interactive_sign-in) for details on how to implement
-//                        // Interactive Sign-in.
-//                    }
-//                }
-//        }
-//    }
-
 }

@@ -91,7 +91,7 @@ class HomeFragment : Fragment() {
             }
             leaderboardCard.setOnClickListener {
                 Games.getLeaderboardsClient(activity, viewModel.account.value!!)
-                    .getLeaderboardIntent(getString(R.string.leaderboard_id))
+                    .getLeaderboardIntent(getString(R.string.leaderboard_scannerizzazioni))
                     .addOnSuccessListener {
                         activity.startActivityFromFragment(this@HomeFragment, it, RC_LEADERBOARD_UI)
                     }

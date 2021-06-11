@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--app_id-->
+    <string name="app_id" translatable="false">340301525584</string>
+    <!--package_name-->
+    <string name="package_name" translatable="false">com.eliamarcantognini.honeyapp</string>
+    <!--achievement Benvenuto tra le api!-->
+    <string name="achievement_benvenuto_tra_le_api" translatable="false">CgkI0OS03PMJEAIQAQ</string>
+    <!--achievement Stai diventando forte!-->
+    <string name="achievement_stai_diventando_forte" translatable="false">CgkI0OS03PMJEAIQAw</string>
+    <!--achievement Continua così!-->
+    <string name="achievement_continua_cos" translatable="false">CgkI0OS03PMJEAIQBg</string>
+    <!--leaderboard Scannerizzazioni-->
+    <string name="leaderboard_scannerizzazioni" translatable="false">CgkI0OS03PMJEAIQAg</string>
+</resources>

@@ -1,9 +1,9 @@
 package com.eliamarcantognini.honeyapp
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +18,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.drive.Drive
-import com.google.android.gms.drive.DriveContents
-import com.google.android.gms.drive.DriveFolder
-import com.google.android.gms.drive.DriveResource
 import com.google.android.gms.games.Games
 import com.google.android.gms.games.GamesClient
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -71,28 +68,6 @@ class LoginFragment : Fragment() {
         signInSilently()
 
 
-
-        // ONE TAP
-//        oneTapClient = Identity.getSignInClient(requireActivity())
-//        signInRequest = BeginSignInRequest.builder()
-//            .setPasswordRequestOptions(
-//                BeginSignInRequest.PasswordRequestOptions.builder()
-//                    .setSupported(true)
-//                    .build()
-//            )
-//            .setGoogleIdTokenRequestOptions(
-//                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-//                    .setSupported(true)
-//                    // Your server's client ID, not your Android client ID.
-//                    .setServerClientId(getString(R.string.web_client_id))
-//                    // Only show accounts previously used to sign in.
-//                    .setFilterByAuthorizedAccounts(true)
-//                    .build()
-//            )
-//            // Automatically sign in when exactly one credential is retrieved.
-//            .setAutoSelectEnabled(true)
-//            .build()
-
     }
 
     private fun signInSilently() {
@@ -104,9 +79,7 @@ class LoginFragment : Fragment() {
         if (GoogleSignIn.hasPermissions(account, *signInOptions.scopeArray)) {
             // Already signed in.
             // The signed in account is stored in the 'account' variable.
-            val gamesClient = Games.getGamesClient(context, account!!)
-            gamesClient.setViewForPopups(requireView())
-            updatePlayerInformation(context, account)
+            updatePlayerInformation(context, account!!)
         } else {
             // Haven't been signed-in before. Try the silent sign-in first.
             val signInClient = GoogleSignIn.getClient(activity, signInOptions)
@@ -155,6 +128,7 @@ class LoginFragment : Fragment() {
     private fun updatePlayerInformation(context: Context, signedAccount: GoogleSignInAccount) {
         val gamesClient = Games.getGamesClient(context, signedAccount)
         gamesClient.setViewForPopups(requireView())
+//        gamesClient.setGravityForPopups(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
         val playerClient = Games.getPlayersClient(context, signedAccount)
         val task = playerClient.currentPlayer
         task.addOnSuccessListener {
