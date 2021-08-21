@@ -101,6 +101,7 @@ class HomeFragment : Fragment() {
             nameProfileTxt.text = viewModel.name
             locationProfileTxt.text = viewModel.displayName
             pointProfileTxt.text = viewModel.playerLevel?.levelNumber.toString()
+
             val imageManager = ImageManager.create(requireContext())
             imageManager.loadImage(profileImg, viewModel.imageUri)
         }
