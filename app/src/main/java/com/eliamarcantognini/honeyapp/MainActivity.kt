@@ -9,12 +9,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: MainActivityBinding
-    private lateinit var googleSignInClient: GoogleSignInClient
+//    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,12 +27,17 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId()
-            .requestProfile().build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
+//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId()
+//            .requestProfile().build()
+//        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-//        FirebaseApp.initializeApp(this)
+        FirebaseAuth.getInstance().signOut()
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        FirebaseAuth.getInstance().signOut()
     }
 
 }

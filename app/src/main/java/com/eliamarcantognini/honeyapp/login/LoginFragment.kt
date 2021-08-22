@@ -32,7 +32,7 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var googleSignInClient: GoogleSignInClient
 
-//    private lateinit var googleSignInOptions: GoogleSignInOptions
+    //    private lateinit var googleSignInOptions: GoogleSignInOptions
 //    private lateinit var googleSignInAccount: GoogleSignInAccount
     private lateinit var gamesClient: GamesClient
 
@@ -71,7 +71,11 @@ class LoginFragment : Fragment() {
         binding.apply {
             btnSignIn.setOnClickListener {
                 val signInIntent = googleSignInClient.signInIntent
-                requireActivity().startActivityFromFragment(this@LoginFragment, signInIntent, RC_SIGN_IN)
+                requireActivity().startActivityFromFragment(
+                    this@LoginFragment,
+                    signInIntent,
+                    RC_SIGN_IN
+                )
             }
         }
         auth = FirebaseAuth.getInstance()
@@ -82,15 +86,19 @@ class LoginFragment : Fragment() {
 
     private fun signInSilently() {
         val activity = requireActivity()
-        val context = requireContext()
-        val signedInAccount = GoogleSignIn.getLastSignedInAccount(context)
-        if (GoogleSignIn.hasPermissions(signedInAccount, *signInOptions.scopeArray)) {
-            // Already signed in.
-            // The signed in account is stored in the 'account' variable.
-            firebaseAuthWithPlayGames(signedInAccount)
-        } else {
+//        val context = requireContext()
+//        val signedInAccount = GoogleSignIn.getLastSignedInAccount(context)
+        // FirebaseAuth non funziona con l'account già connesso, va richiesto ogni volta il login
+//        if (GoogleSignIn.hasPermissions(signedInAccount, *signInOptions.scopeArray)) {
+//            // Already signed in.
+//            // The signed in account is stored in the 'account' variable.
+////            updatePlayerInformation(requireContext(), signedInAccount!!, viewModel.firebaseUser.value)
+//            Log.d("FIREBASELOG", "Sono nel permesso")
+//            firebaseAuthWithPlayGames(signedInAccount)
+//        } else {
             // Haven't been signed-in before. Try the silent sign-in first.
             val signInClient = GoogleSignIn.getClient(activity, signInOptions)
+            Log.d("FIREBASELOG", "Sono nel login vero")
             signInClient
                 .silentSignIn()
                 .addOnCompleteListener(
@@ -105,7 +113,7 @@ class LoginFragment : Fragment() {
                         activity.startActivityFromFragment(this, intent, RC_SIGN_IN)
                     }
                 }
-        }
+//        }
 
     }
 
@@ -125,12 +133,46 @@ class LoginFragment : Fragment() {
                 }
 //                AlertDialog.Builder(requireContext()).setMessage(message)
 //                    .setNeutralButton(R.string.ok, null).show()
-                MaterialAlertDialogBuilder(requireContext()).setMessage(message).setNeutralButton("OK", null).show()
+                MaterialAlertDialogBuilder(requireContext()).setMessage(message)
+                    .setNeutralButton("OK", null).show()
             }
         }
     }
 
-    private fun updatePlayerInformation(context: Context, signedAccount: GoogleSignInAccount, firebaseUser: FirebaseUser?) {
+    private fun firebaseAuthWithPlayGames(acct: GoogleSignInAccount) {
+        Log.d("FIREBASE", "firebaseAuthWithPlayGames:" + acct.id!!)
+
+        auth = FirebaseAuth.getInstance()
+        val credential = PlayGamesAuthProvider.getCredential(acct.serverAuthCode!!)
+        Log.d("FIREBASEPROV", credential.provider)
+
+        Log.d("FIREBASETOKEN", acct.serverAuthCode!!)
+
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("FIREBASE", "signInWithCredential:success")
+                    val user = auth.currentUser
+                    updatePlayerInformation(requireContext(), acct, user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("FIREBASE", "signInWithCredential:failure", task.exception)
+                    Toast.makeText(
+                        requireContext(), "Firebase Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    updatePlayerInformation(requireContext(), acct, null)
+                }
+            }
+
+    }
+
+    private fun updatePlayerInformation(
+        context: Context,
+        signedAccount: GoogleSignInAccount,
+        firebaseUser: FirebaseUser?
+    ) {
         val gamesClient = Games.getGamesClient(context, signedAccount)
         gamesClient.setViewForPopups(requireView())
 //        gamesClient.setGravityForPopups(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
@@ -175,28 +217,5 @@ class LoginFragment : Fragment() {
 
     }
 
-    private fun firebaseAuthWithPlayGames(acct: GoogleSignInAccount) {
-        Log.d("FIREBASE", "firebaseAuthWithPlayGames:" + acct.id!!)
-
-        auth = FirebaseAuth.getInstance()
-        val credential = PlayGamesAuthProvider.getCredential(acct.serverAuthCode!!)
-        Log.d("FIREBASEPROV", credential.provider)
-
-        Log.d("FIREBASETOKEN", acct.serverAuthCode!!)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("FIREBASE", "signInWithCredential:success")
-                    val user = auth.currentUser
-                    updatePlayerInformation(requireContext(), acct, user)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w("FIREBASE", "signInWithCredential:failure", task.exception)
-                    Toast.makeText(requireContext(), "Firebase Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
-                    updatePlayerInformation(requireContext(), acct, null)
-                }
-            }
-    }
 }
+

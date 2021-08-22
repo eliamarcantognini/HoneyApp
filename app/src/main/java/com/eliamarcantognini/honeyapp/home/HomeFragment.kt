@@ -21,6 +21,8 @@ import com.eliamarcantognini.honeyapp.databinding.HomeFragmentBinding
 import com.google.android.gms.common.images.ImageManager
 import com.google.android.gms.games.Games
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PlayGamesAuthProvider
 
 class HomeFragment : Fragment() {
 
@@ -98,6 +100,18 @@ class HomeFragment : Fragment() {
             nameProfileTxt.text = viewModel.name
             locationProfileTxt.text = viewModel.displayName
             pointProfileTxt.text = viewModel.playerLevel?.levelNumber.toString()
+
+            // Così accedo ai dati di un profilo playgames tramite firebase
+            viewModel.firebaseUser.value?.let {
+                Log.d("FIREBASEAA", "Ci arrivo qui?")
+                for (profile in it.providerData) {
+                    if (profile.providerId == PlayGamesAuthProvider.PROVIDER_ID)
+                    {
+                        Log.d("FIREBASEAA", "Non sembra")
+                        scanProfileTxt.text = profile.displayName
+                    }
+                }
+            }
 
             val imageManager = ImageManager.create(requireContext())
             imageManager.loadImage(profileImg, viewModel.imageUri)
