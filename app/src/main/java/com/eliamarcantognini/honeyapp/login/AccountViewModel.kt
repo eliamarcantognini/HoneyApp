@@ -16,10 +16,6 @@ class AccountViewModel : ViewModel() {
     val account: LiveData<GoogleSignInAccount>
         get() = _account
 
-    private var _firebaseAuthState = FirebaseAuthStateLiveData(FirebaseAuth.getInstance())
-    val firebaseAuthState: FirebaseAuthStateLiveData
-        get() = _firebaseAuthState
-
     private var _player = MutableLiveData<Player>()
     val player: LiveData<Player>
         get() = _player
