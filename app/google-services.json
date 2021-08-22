@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "340301525584",
+    "firebase_url": "https://bee2honey-87082961-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "bee2honey-87082961",
+    "storage_bucket": "bee2honey-87082961.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340301525584:android:77027c9492ea3cbb99d755",
+        "android_client_info": {
+          "package_name": "com.eliamarcantognini.honeyapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340301525584-4tsnrv8qjug2obqaqru86i67dms2m3i6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eliamarcantognini.honeyapp",
+            "certificate_hash": "a7b47c76344124b882fd28bdccd7facd4a9cc38a"
+          }
+        },
+        {
+          "client_id": "340301525584-9cnt8f0tobojig5mecv8rmd58kk704tm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eliamarcantognini.honeyapp",
+            "certificate_hash": "da8c06e928761d57d88cf76c0f84f2b8ec299349"
+          }
+        },
+        {
+          "client_id": "340301525584-o2t5mj1em38n10e94u64g72cqim4fngq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqzM9-Gikfx8ZlhSMHlhmHF5eMDOdsnq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340301525584-o2t5mj1em38n10e94u64g72cqim4fngq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

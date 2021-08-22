@@ -1,4 +1,4 @@
-package com.eliamarcantognini.honeyapp
+package com.eliamarcantognini.honeyapp.login
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.games.Player
 import com.google.android.gms.games.PlayerLevel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class AccountViewModel : ViewModel() {
 
@@ -14,9 +16,17 @@ class AccountViewModel : ViewModel() {
     val account: LiveData<GoogleSignInAccount>
         get() = _account
 
+    private var _firebaseAuthState = FirebaseAuthStateLiveData(FirebaseAuth.getInstance())
+    val firebaseAuthState: FirebaseAuthStateLiveData
+        get() = _firebaseAuthState
+
     private var _player = MutableLiveData<Player>()
     val player: LiveData<Player>
         get() = _player
+
+    private var _firebaseUser = MutableLiveData<FirebaseUser?>()
+    val firebaseUser: LiveData<FirebaseUser?>
+        get() = _firebaseUser
 
     val name: String?
         get() = _player.value?.name
@@ -33,17 +43,16 @@ class AccountViewModel : ViewModel() {
         get() = _player.value?.levelInfo?.currentLevel
 
 
-//    init {
-//        _account.value
-//    }
-
-    fun updatePlayer(signedPlayer: Player) {
-        _player.value = signedPlayer
+    fun updatePlayer(signedPlayer: Player?) {
+        _player.value = signedPlayer!!
     }
 
-    fun updateAccount(signedAccount: GoogleSignInAccount) {
-        _account.value = signedAccount
+    fun updateAccount(signedAccount: GoogleSignInAccount?) {
+        _account.value = signedAccount!!
     }
 
+    fun updateFirebaseUser(currentFirebaseUser: FirebaseUser?) {
+        _firebaseUser.value = currentFirebaseUser
+    }
 
 }

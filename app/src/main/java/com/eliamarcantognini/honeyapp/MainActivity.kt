@@ -8,6 +8,7 @@ import com.eliamarcantognini.honeyapp.databinding.MainActivityBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.FirebaseApp
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId()
             .requestProfile().build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+//        FirebaseApp.initializeApp(this)
 
     }
 

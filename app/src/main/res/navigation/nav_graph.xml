@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.eliamarcantognini.honeyapp.LoginFragment"
+        android:name="com.eliamarcantognini.honeyapp.login.LoginFragment"
         android:label="fragment_splash"
         tools:layout="@layout/login_fragment" >
         <action

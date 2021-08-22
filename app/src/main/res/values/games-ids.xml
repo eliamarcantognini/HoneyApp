@@ -3,9 +3,9 @@
     <!--app_id-->
     <string name="app_id" translatable="false">340301525584</string>
     <!--web_client_google_plat_id-->
-    <string name="web_client_id">340301525584</string>
+    <string name="web_client_id" translatable="false">340301525584</string>
     <!--leaderboard_id-->
-    <string name="leaderboard_id">CgkI0OS03PMJEAIQAg</string>
+    <string name="leaderboard_id" translatable="false">CgkI0OS03PMJEAIQAg</string>
     <!--package_name-->
     <string name="package_name" translatable="false">com.eliamarcantognini.honeyapp</string>
     <!--achievement Benvenuto tra le api!-->

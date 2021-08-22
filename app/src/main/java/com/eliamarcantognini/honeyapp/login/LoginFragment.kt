@@ -1,16 +1,18 @@
-package com.eliamarcantognini.honeyapp
+package com.eliamarcantognini.honeyapp.login
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.LoginFragmentBinding
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -21,6 +23,7 @@ import com.google.android.gms.drive.Drive
 import com.google.android.gms.games.Games
 import com.google.android.gms.games.GamesClient
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.*
 
 
 class LoginFragment : Fragment() {
@@ -35,9 +38,11 @@ class LoginFragment : Fragment() {
 
     //    private lateinit var oneTapClient: SignInClient
 //    private lateinit var signInRequest: BeginSignInRequest
+    private lateinit var auth: FirebaseAuth
     private lateinit var navController: NavController
     private lateinit var viewModel: AccountViewModel
     private var RC_SIGN_IN = 101
+    private lateinit var signInOptions: GoogleSignInOptions
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +50,13 @@ class LoginFragment : Fragment() {
     ): View? {
         _binding = LoginFragmentBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
+        signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+            .requestServerAuthCode(getString(R.string.default_web_client_id))
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestScopes(Drive.SCOPE_APPFOLDER)
+            .build()
+        auth = FirebaseAuth.getInstance()
+
         return binding.root
     }
 
@@ -54,17 +66,15 @@ class LoginFragment : Fragment() {
         navController = NavHostFragment.findNavController(this)
 
         viewModel = ViewModelProvider(requireActivity()).get(AccountViewModel::class.java)
-        val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
-            .requestScopes(Drive.SCOPE_APPFOLDER)
-            .build()
         googleSignInClient =
-            GoogleSignIn.getClient(requireContext(), googleSignInOptions)
+            GoogleSignIn.getClient(requireContext(), signInOptions)
         binding.apply {
             btnSignIn.setOnClickListener {
                 val signInIntent = googleSignInClient.signInIntent
                 requireActivity().startActivityFromFragment(this@LoginFragment, signInIntent, RC_SIGN_IN)
             }
         }
+        auth = FirebaseAuth.getInstance()
         signInSilently()
 
 
@@ -73,13 +83,11 @@ class LoginFragment : Fragment() {
     private fun signInSilently() {
         val activity = requireActivity()
         val context = requireContext()
-        val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
-            .requestScopes(Drive.SCOPE_APPFOLDER).build()
-        val account = GoogleSignIn.getLastSignedInAccount(context)
-        if (GoogleSignIn.hasPermissions(account, *signInOptions.scopeArray)) {
+        val signedInAccount = GoogleSignIn.getLastSignedInAccount(context)
+        if (GoogleSignIn.hasPermissions(signedInAccount, *signInOptions.scopeArray)) {
             // Already signed in.
             // The signed in account is stored in the 'account' variable.
-            updatePlayerInformation(context, account!!)
+            firebaseAuthWithPlayGames(signedInAccount)
         } else {
             // Haven't been signed-in before. Try the silent sign-in first.
             val signInClient = GoogleSignIn.getClient(activity, signInOptions)
@@ -91,15 +99,10 @@ class LoginFragment : Fragment() {
                     if (task.isSuccessful) {
                         // The signed in account is stored in the task's result.
                         val signedInAccount: GoogleSignInAccount = task.result
-                        updatePlayerInformation(context, signedInAccount)
+                        firebaseAuthWithPlayGames(signedInAccount)
                     } else {
-                        // Player will need to sign-in explicitly using via UI.
-                        // See [sign-in best practices](http://developers.google.com/games/services/checklist) for guidance on how and when to implement Interactive Sign-in,
-                        // and [Performing Interactive Sign-in](http://developers.google.com/games/services/android/signin#performing_interactive_sign-in) for details on how to implement
-                        // Interactive Sign-in.
                         val intent = signInClient.signInIntent
                         activity.startActivityFromFragment(this, intent, RC_SIGN_IN)
-
                     }
                 }
         }
@@ -112,7 +115,9 @@ class LoginFragment : Fragment() {
             if (result!!.isSuccess) {
                 // The signed in account is stored in the result.
                 val signedInAccount = result.signInAccount
-                signedInAccount?.let { updatePlayerInformation(requireContext(), it) }
+                signedInAccount?.let {
+                    firebaseAuthWithPlayGames(signedInAccount)
+                }
             } else {
                 var message = result.status.statusMessage
                 if (message == null || message.isEmpty()) {
@@ -125,17 +130,73 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun updatePlayerInformation(context: Context, signedAccount: GoogleSignInAccount) {
+    private fun updatePlayerInformation(context: Context, signedAccount: GoogleSignInAccount, firebaseUser: FirebaseUser?) {
         val gamesClient = Games.getGamesClient(context, signedAccount)
         gamesClient.setViewForPopups(requireView())
 //        gamesClient.setGravityForPopups(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
         val playerClient = Games.getPlayersClient(context, signedAccount)
         val task = playerClient.currentPlayer
+//        val credential = GoogleAuthProvider.getCredential(signedAccount.idToken, null)
+//        auth.signInWithCredential(credential)
+//        val myUserStateObserver =
+//            Observer<FirebaseAuthUserState> { userState ->
+//                when (userState) {
+//                    is UserSignedOut -> {
+//                        Log.d("OBS", "1")
+//                        val message = "Accedi per proseguire"
+//                        MaterialAlertDialogBuilder(requireContext()).setMessage(message).setNeutralButton("OK", null).show()
+//                        auth.signInWithCredential(credential)
+//                    }
+//                    is UserSignedIn -> {
+//                        Log.d("OBS", "2")
+//                        task.addOnSuccessListener {
+//                            viewModel.updateAccount(signedAccount)
+//                            viewModel.updatePlayer(it)
+//                            navController.navigate(LoginFragmentDirections.actionSplashFragmentToMainFragment())
+//                        }
+//                    }
+//                    is UserUnknown -> {
+//                        Log.d("OBS", "3")
+//                        val message = "Accedi per proseguire"
+//                        MaterialAlertDialogBuilder(requireContext()).setMessage(message).setNeutralButton("OK", null).show()
+//                        auth.signInWithCredential(credential)
+//                    }
+//
+//                }
+//            }
+//        val authStateLiveData = viewModel.firebaseAuthState
+//        authStateLiveData.observeForever(myUserStateObserver)
         task.addOnSuccessListener {
             viewModel.updateAccount(signedAccount)
             viewModel.updatePlayer(it)
+            viewModel.updateFirebaseUser(firebaseUser)
             navController.navigate(LoginFragmentDirections.actionSplashFragmentToMainFragment())
         }
 
+    }
+
+    private fun firebaseAuthWithPlayGames(acct: GoogleSignInAccount) {
+        Log.d("FIREBASE", "firebaseAuthWithPlayGames:" + acct.id!!)
+
+        auth = FirebaseAuth.getInstance()
+        val credential = PlayGamesAuthProvider.getCredential(acct.serverAuthCode!!)
+        Log.d("FIREBASEPROV", credential.provider)
+
+        Log.d("FIREBASETOKEN", acct.serverAuthCode!!)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("FIREBASE", "signInWithCredential:success")
+                    val user = auth.currentUser
+                    updatePlayerInformation(requireContext(), acct, user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("FIREBASE", "signInWithCredential:failure", task.exception)
+                    Toast.makeText(requireContext(), "Firebase Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                    updatePlayerInformation(requireContext(), acct, null)
+                }
+            }
     }
 }

@@ -3,7 +3,6 @@ package com.eliamarcantognini.honeyapp.menu.scanner
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
-import com.eliamarcantognini.honeyapp.AccountViewModel
+import com.eliamarcantognini.honeyapp.login.AccountViewModel
 import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.ScanResultFragmentBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn

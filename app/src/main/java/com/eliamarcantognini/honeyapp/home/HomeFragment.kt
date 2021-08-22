@@ -15,12 +15,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import com.eliamarcantognini.honeyapp.AccountViewModel
+import com.eliamarcantognini.honeyapp.login.AccountViewModel
 import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.HomeFragmentBinding
-import com.eliamarcantognini.honeyapp.menu.scanner.ScanResultFragmentDirections
 import com.google.android.gms.common.images.ImageManager
 import com.google.android.gms.games.Games
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/primaryColor"
     android:backgroundTint="@color/primaryColor"
-    tools:context=".LoginFragment">
+    tools:context=".login.LoginFragment">
 
     <ImageView
         android:id="@+id/imageView"
