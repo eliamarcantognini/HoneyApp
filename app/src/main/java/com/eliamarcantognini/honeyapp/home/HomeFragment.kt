@@ -15,14 +15,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.eliamarcantognini.honeyapp.login.AccountViewModel
 import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.HomeFragmentBinding
+import com.eliamarcantognini.honeyapp.firestore.User
+import com.eliamarcantognini.honeyapp.login.AccountViewModel
 import com.google.android.gms.common.images.ImageManager
 import com.google.android.gms.games.Games
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PlayGamesAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 
 class HomeFragment : Fragment() {
 
@@ -66,6 +68,9 @@ class HomeFragment : Fragment() {
         val activity = requireActivity()
         val navController = requireView().findNavController()
 
+        updateProfile()
+
+
         val requestPermissionLauncher =
             registerForActivityResult(
                 ActivityResultContracts.RequestPermission()
@@ -98,32 +103,29 @@ class HomeFragment : Fragment() {
             scanboardCard.setOnClickListener { navController.navigate(HomeFragmentDirections.actionMainFragmentToScanboardFragment()) }
             Log.i("AIUTO2", "${viewModel.player.value?.name}")
             nameProfileTxt.text = viewModel.name
-            locationProfileTxt.text = viewModel.displayName
-            pointProfileTxt.text = viewModel.playerLevel?.levelNumber.toString()
 
             // Così accedo ai dati di un profilo playgames tramite firebase
-            viewModel.firebaseUser.value?.let {
-                Log.d("FIREBASEAA", "Ci arrivo qui?")
-                for (profile in it.providerData) {
-                    if (profile.providerId == PlayGamesAuthProvider.PROVIDER_ID)
-                    {
-                        Log.d("FIREBASEAA", "Non sembra")
-                        scanProfileTxt.text = profile.displayName
-                    }
-                }
-            }
+//            viewModel.firebaseUser.value?.let {
+//                Log.d("FIREBASEAA", "Ci arrivo qui?")
+//                for (profile in it.providerData) {
+//                    if (profile.providerId == PlayGamesAuthProvider.PROVIDER_ID) {
+//                        Log.d("FIREBASEAA", "Non sembra")
+//                        scanProfileTxt.text = profile.displayName
+//                    }
+//                }
+//            }
 
             val imageManager = ImageManager.create(requireContext())
-            imageManager.loadImage(profileImg, viewModel.imageUri)
+            imageManager.loadImage(profileImg, viewModel.imageUri!!)
         }
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RC_LEADERBOARD_UI) {
-
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        if (requestCode == RC_LEADERBOARD_UI) {
+//
+//        }
+//    }
 
     private fun showDialog(activity: Activity) {
         val builder = MaterialAlertDialogBuilder(activity)
@@ -141,4 +143,35 @@ class HomeFragment : Fragment() {
             .setCancelable(false).show()
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateProfile()
+    }
+
+    private fun updateProfile() {
+        val db = FirebaseFirestore.getInstance()
+        val auth = FirebaseAuth.getInstance()
+        val userId = auth.currentUser!!.uid
+
+        val userRef = db.collection("users").document(userId!!)
+        userRef.get().addOnSuccessListener {
+            if (!it.exists()) {
+                val user = User(viewModel.name, viewModel.displayName, 1, 0, 0)
+                userRef.set(user)
+                binding.apply {
+                    scanProfileTxt.text = user.scan.toString()
+                    pointProfileTxt.text = user.points.toString()
+                    levelProfileTxt.text = user.level.toString()
+                }
+            } else {
+                binding.apply {
+                    val user = it.toObject<User>()
+                    Log.d("DAOOO", user?.points.toString() + " ___ " + user?.scan.toString() )
+                    scanProfileTxt.text = user?.scan.toString()
+                    pointProfileTxt.text = user?.points.toString()
+                    levelProfileTxt.text = user?.level.toString()
+                }
+            }
+        }
+    }
 }

@@ -10,22 +10,21 @@ class ScannerViewModel : ViewModel() {
     private val _honey = MutableLiveData<Honey>()
     val honey: LiveData<Honey>
         get() = _honey
+
     private val _eventScanResult = MutableLiveData<Boolean>()
     val eventScanResult: LiveData<Boolean>
         get() = _eventScanResult
 
+    private val _scanComplete = MutableLiveData<Boolean>()
+    val scanComplete: LiveData<Boolean>
+        get() = _scanComplete
 
     init {
-        Log.i("ScannerViewModel", "Scanner created")
         val initHoney = Honey("", "", "", "", "", "", "", 1, "")
         _honey.value = initHoney
         _eventScanResult.value = false
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        Log.i("ScannerViewModel", "Scanner destroyed")
-    }
 
     fun update(scanned: Honey) {
         _honey.value = scanned
@@ -37,8 +36,15 @@ class ScannerViewModel : ViewModel() {
     }
 
     fun onScanResultComplete() {
-        Log.i("ScannerView", "Complete")
         _eventScanResult.value = false
+    }
+
+    fun onScanComplete() {
+        _scanComplete.value = true
+    }
+
+    fun resetScanComplete() {
+        _scanComplete.value = false
     }
 
 }

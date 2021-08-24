@@ -10,11 +10,14 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
-import com.eliamarcantognini.honeyapp.login.AccountViewModel
 import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.ScanResultFragmentBinding
+import com.eliamarcantognini.honeyapp.login.AccountViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.games.Games
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ScanResultFragment : Fragment() {
 
@@ -85,6 +88,7 @@ class ScanResultFragment : Fragment() {
                 startActivity(Intent(Intent.ACTION_VIEW, geo))
             }
         }
+
         return binding.root
     }
 
