@@ -30,4 +30,10 @@
     <string name="altromiele">Miele molto raro</string>
     <string name="logo">Logo</string>
     <string name="livello">LIVELLO</string>
+    <string name="honeyimage">honeyImage</string>
+    <string name="nome_del_miele">Nome del miele</string>
+    <string name="nome_del_produttore">Nome del produttore</string>
+    <string name="descrizione">Descrizione</string>
+    <string name="nome_miele">Nome Miele</string>
+    <string name="location_del_produttore">Location del produttore</string>
 </resources>

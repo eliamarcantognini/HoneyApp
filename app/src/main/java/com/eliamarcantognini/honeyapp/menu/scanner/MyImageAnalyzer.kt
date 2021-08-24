@@ -64,8 +64,8 @@ class MyImageAnalyzer(
         val db = FirebaseFirestore.getInstance()
         val auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser!!.uid
-
-        val scansRef = db.collection("scans").document(userId)
+        val token = honey.token!!
+        val scansRef = db.collection("scans").document(userId).collection("data").document(token)
         scansRef.get().addOnSuccessListener {
             var honeyType = ""
             when (honey.type) {
@@ -82,6 +82,7 @@ class MyImageAnalyzer(
                 10 -> honeyType = "Miele molto raro"
             }
             val newScan = hashMapOf(
+                "token" to honey.token,
                 "type" to honeyType,
                 "firm" to honey.firmName,
                 "desc" to honey.description,
@@ -91,10 +92,9 @@ class MyImageAnalyzer(
                 "site" to honey.site,
                 "num" to honey.telephoneNumber
             )
+//            scansRef.add(newScan) // se si usa la collection
             if (!it.exists()) {
                 scansRef.set(newScan)
-            } else {
-                scansRef.update("data", FieldValue.arrayUnion(newScan))
             }
         }
 

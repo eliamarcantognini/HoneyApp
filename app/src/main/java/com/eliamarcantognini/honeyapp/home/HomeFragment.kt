@@ -103,29 +103,13 @@ class HomeFragment : Fragment() {
             scanboardCard.setOnClickListener { navController.navigate(HomeFragmentDirections.actionMainFragmentToScanboardFragment()) }
             Log.i("AIUTO2", "${viewModel.player.value?.name}")
             nameProfileTxt.text = viewModel.name
-
-            // Così accedo ai dati di un profilo playgames tramite firebase
-//            viewModel.firebaseUser.value?.let {
-//                Log.d("FIREBASEAA", "Ci arrivo qui?")
-//                for (profile in it.providerData) {
-//                    if (profile.providerId == PlayGamesAuthProvider.PROVIDER_ID) {
-//                        Log.d("FIREBASEAA", "Non sembra")
-//                        scanProfileTxt.text = profile.displayName
-//                    }
-//                }
-//            }
+            aliasProfileTxt.text = viewModel.displayName
 
             val imageManager = ImageManager.create(requireContext())
             imageManager.loadImage(profileImg, viewModel.imageUri!!)
         }
 
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        if (requestCode == RC_LEADERBOARD_UI) {
-//
-//        }
-//    }
 
     private fun showDialog(activity: Activity) {
         val builder = MaterialAlertDialogBuilder(activity)

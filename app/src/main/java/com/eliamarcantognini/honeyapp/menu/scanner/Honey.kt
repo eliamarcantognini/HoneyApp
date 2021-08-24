@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Honey(
     @SerialName("c")
-    val controlChar: String? = null, // Control character
+    val token: String? = null, // Control character
     @SerialName("f")
     val firmName: String, // Firm name
     @SerialName("s")

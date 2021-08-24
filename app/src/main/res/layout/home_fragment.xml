@@ -99,7 +99,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/locationProfileTxt"
+            android:id="@+id/aliasProfileTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -119,7 +119,7 @@
             android:text="TextView"
             android:textColor="@color/secondaryTextColor"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/locationProfileTxt"
+            app:layout_constraintBottom_toTopOf="@+id/aliasProfileTxt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
