@@ -3,6 +3,7 @@ package com.eliamarcantognini.honeyapp.menu.scanner
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.ScanResultFragmentBinding
+import com.eliamarcantognini.honeyapp.firestore.User
 import com.eliamarcantognini.honeyapp.login.AccountViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.games.Games
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 
 class ScanResultFragment : Fragment() {
 
@@ -111,13 +114,18 @@ class ScanResultFragment : Fragment() {
                 .increment(getString(R.string.achievement_stai_diventando_forte), 1);
             Games.getAchievementsClient(it, account)
                 .increment(getString(R.string.achievement_continua_cos), 1);
-            // leaderboard
-//            Games.getLeaderboardsClient(it, GoogleSignIn.getLastSignedInAccount(it))
-//                .loadCurrentPlayerLeaderboardScore(getString(R.string.leaderboard_scannerizzazioni), 1, 1).addOnSuccessListener {
-//                }
 
-            Games.getLeaderboardsClient(it, account)
-                .submitScore(getString(R.string.leaderboard_scannerizzazioni), 1);
+            val db = FirebaseFirestore.getInstance()
+            val auth = FirebaseAuth.getInstance()
+            val userId = auth.currentUser!!.uid
+            val userRef = db.collection("users").document(userId)
+            userRef.get().addOnSuccessListener { it1 ->
+                val points = it1.toObject(User::class.java)!!.points!!.toLong()
+                Log.d("POINTS", points.toString())
+                Games.getLeaderboardsClient(it, account)
+                    .submitScore(getString(R.string.leaderboard_scannerizzazioni), points);
+            }
+
         }
     }
 }

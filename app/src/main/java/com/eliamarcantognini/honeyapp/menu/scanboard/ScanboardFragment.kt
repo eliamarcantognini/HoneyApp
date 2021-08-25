@@ -81,9 +81,9 @@ class ScanboardFragment : Fragment(), OnScanListener {
 
                 doc.toObject(Scan::class.java)?.let { it1 -> data.add(it1) }
             }
-            Log.d("SCANLIST1", data.toString())
-
-            Log.d("SCANLIST", data.toString())
+//            Log.d("SCANLIST1", data.toString())
+//
+//            Log.d("SCANLIST", data.toString())
             adapter.setData(data)
         }
 
