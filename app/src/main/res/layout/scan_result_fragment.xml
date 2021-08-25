@@ -46,7 +46,10 @@
                 android:id="@+id/honeyImg"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/primaryColor"
                 android:padding="4dp"
                 android:scaleType="fitCenter"
                 app:contentPadding="12dp"
@@ -117,31 +120,46 @@
 
             <TextView
                 android:id="@+id/honeyNameTxt"
-                android:layout_width="wrap_content"
+                android:textAlignment="center"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/nome_del_miele"
+                android:textColor="@color/secondaryTextColor"
                 android:textSize="20sp"
+                android:fontFamily="sans-serif-black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/honeyImg" />
 
             <TextView
                 android:id="@+id/honeyDescTxt"
-                android:layout_width="wrap_content"
+                android:textAlignment="center"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/descrizione"
+                android:textColor="@color/secondaryTextColor"
+                android:fontFamily="sans-serif-condensed"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/honeyNameTxt" />
 
             <TextView
                 android:id="@+id/firmTxt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="sans-serif-medium"
                 android:text="@string/nome_del_produttore"
+                android:textColor="@color/secondaryTextColor"
+                android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/honeyDescTxt" />
@@ -170,6 +188,63 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/pointLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/complimenti"
+                android:textColor="@color/secondaryTextColor"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@+id/guadagnoLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/guadagnoLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
+                android:textAlignment="center"
+                android:text="@string/hai_guadagnato_20_punti"
+                android:textColor="@color/secondaryTextColor"
+                app:layout_constraintBottom_toTopOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pointLabel" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/logo"
+                android:textColor="@color/secondaryTextColor"
+                app:layout_constraintBottom_toTopOf="@+id/puntiRimanentiTxt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guadagnoLabel" />
+
+            <TextView
+                android:id="@+id/puntiRimanentiTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:textAlignment="center"
+                android:text="@string/punti_rimanenti"
+                android:textColor="@color/secondaryTextColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,4 +38,7 @@
     <string name="new_scan">New Scan</string>
     <string name="citt_del_produttore">Città del produttore</string>
     <string name="nome_miele">Nome Miele</string>
+    <string name="complimenti">Complimenti!</string>
+    <string name="hai_guadagnato_20_punti">Hai guadagnato 20 punti!</string>
+    <string name="punti_rimanenti">Ti rimangono %1$d punti al prossimo livello!</string>
 </resources>
