@@ -7,12 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.ScanboardFragmentBinding
 import com.eliamarcantognini.honeyapp.firestore.Scan
+import com.eliamarcantognini.honeyapp.home.HomeFragmentDirections
 import com.eliamarcantognini.honeyapp.menu.scanner.OnScanListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -27,6 +31,8 @@ class ScanboardFragment : Fragment(), OnScanListener {
     private lateinit var layout: View
     private lateinit var adapter: HoneyScanAdapter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var navController: NavController
+    private lateinit var fab: FloatingActionButton
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
@@ -42,10 +48,18 @@ class ScanboardFragment : Fragment(), OnScanListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = NavHostFragment.findNavController(this)
+        initFab()
         initRecyclerView()
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    private fun initFab() {
+        fab = requireActivity().findViewById(R.id.fab_scan)
+        fab.setOnClickListener{
+            navController.navigate(ScanboardFragmentDirections.actionScanboardFragmentToScannerFragment())
+        }
+    }
 
     private fun initRecyclerView() {
         recyclerView = requireActivity().findViewById(R.id.scanRecyclerView)

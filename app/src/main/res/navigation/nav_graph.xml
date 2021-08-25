@@ -28,7 +28,11 @@
         android:id="@+id/scanboardFragment"
         android:name="com.eliamarcantognini.honeyapp.menu.scanboard.ScanboardFragment"
         android:label="scanboard_fragment"
-        tools:layout="@layout/scanboard_fragment" />
+        tools:layout="@layout/scanboard_fragment" >
+        <action
+            android:id="@+id/action_scanboardFragment_to_scannerFragment"
+            app:destination="@id/scannerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/scannerFragment"
         android:name="com.eliamarcantognini.honeyapp.menu.scanner.ScannerFragment"
