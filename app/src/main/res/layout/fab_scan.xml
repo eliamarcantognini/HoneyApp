@@ -6,6 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom|end"
     android:layout_margin="32dp"
-    app:backgroundTint="@color/primaryDarkColor"
-    app:srcCompat="@drawable/outline_qr_code_scanner_24"
+    app:backgroundTint="@color/primaryColor"
+    app:srcCompat="@drawable/outline_qr_code_scanner_black_24"
     android:contentDescription="@string/new_scan" />

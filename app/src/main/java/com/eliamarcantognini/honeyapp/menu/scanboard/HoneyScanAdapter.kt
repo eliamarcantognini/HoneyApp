@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.firestore.Scan
-import com.eliamarcantognini.honeyapp.menu.scanner.OnScanListener
 
 class HoneyScanAdapter (onScanListener: OnScanListener) : RecyclerView.Adapter<HoneyScanHolder>() {
 
@@ -24,7 +23,7 @@ class HoneyScanAdapter (onScanListener: OnScanListener) : RecyclerView.Adapter<H
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HoneyScanHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.honey_list_card, parent, false)
-        return HoneyScanHolder(view)
+        return HoneyScanHolder(view, onScanListener)
     }
 
     override fun onBindViewHolder(holder: HoneyScanHolder, position: Int) {

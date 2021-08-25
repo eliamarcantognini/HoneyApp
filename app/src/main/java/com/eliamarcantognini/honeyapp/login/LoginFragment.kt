@@ -21,7 +21,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.drive.Drive
 import com.google.android.gms.games.Games
-import com.google.android.gms.games.GamesClient
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.*
 

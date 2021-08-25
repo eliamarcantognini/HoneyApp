@@ -14,9 +14,6 @@
             android:id="@+id/action_mainFragment_to_scanboardFragment"
             app:destination="@id/scanboardFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_statusFragment"
-            app:destination="@id/statusFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_scannerFragment"
             app:destination="@id/scannerFragment" />
         <action
@@ -32,6 +29,9 @@
         <action
             android:id="@+id/action_scanboardFragment_to_scannerFragment"
             app:destination="@id/scannerFragment" />
+        <action
+            android:id="@+id/action_scanboardFragment_to_honeyInfoDialog"
+            app:destination="@id/honeyInfoDialog" />
     </fragment>
     <fragment
         android:id="@+id/scannerFragment"
@@ -42,11 +42,6 @@
             android:id="@+id/action_scannerFragment_to_scanResultFragment"
             app:destination="@id/scanResultFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/statusFragment"
-        android:name="com.eliamarcantognini.honeyapp.menu.status.StatusFragment"
-        android:label="status_fragment"
-        tools:layout="@layout/status_fragment" />
     <fragment
         android:id="@+id/scanResultFragment"
         android:name="com.eliamarcantognini.honeyapp.menu.scanner.ScanResultFragment"
@@ -68,4 +63,8 @@
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <dialog
+        android:id="@+id/honeyInfoDialog"
+        android:name="com.eliamarcantognini.honeyapp.menu.scanboard.HoneyInfoDialog"
+        android:label="HoneyInfoDialog" />
 </navigation>

@@ -121,7 +121,7 @@ class ScanResultFragment : Fragment() {
             val userRef = db.collection("users").document(userId)
             userRef.get().addOnSuccessListener { it1 ->
                 val points = it1.toObject(User::class.java)!!.points!!.toLong()
-                Log.d("POINTS", points.toString())
+//                Log.d("POINTS", points.toString())
                 Games.getLeaderboardsClient(it, account)
                     .submitScore(getString(R.string.leaderboard_scannerizzazioni), points);
             }
