@@ -77,6 +77,11 @@ class LoginFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        signInSilently()
+    }
+
     private fun signInSilently() {
         val activity = requireActivity()
 

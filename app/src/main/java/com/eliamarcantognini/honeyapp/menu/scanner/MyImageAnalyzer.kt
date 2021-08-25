@@ -55,8 +55,6 @@ class MyImageAnalyzer(
                     scannerViewModel.onScanComplete()
                 }
             }
-            if (scannerViewModel.scanComplete.value!!)
-                break
         }
     }
 
@@ -82,7 +80,6 @@ class MyImageAnalyzer(
                 10 -> honeyType = "Miele molto raro"
             }
             val newScan = hashMapOf(
-                "token" to honey.token,
                 "type" to honeyType,
                 "firm" to honey.firmName,
                 "desc" to honey.description,
@@ -95,19 +92,19 @@ class MyImageAnalyzer(
 //            scansRef.add(newScan) // se si usa la collection
             if (!it.exists()) {
                 scansRef.set(newScan)
-            }
-        }
-
-        val userRef = db.collection("users").document(userId)
-        userRef.update("points", FieldValue.increment(20))
-        userRef.update("scan", FieldValue.increment(1))
-        userRef.get().addOnCompleteListener() { it1 ->
-            if (it1.isSuccessful) {
-                val points = it1.result["points"].toString().toInt()
-                if (points == 100 || points == 220 || points == 360 || points == 580 || points == 800 || points == 1000) {
-                    userRef.update("level", FieldValue.increment(1))
+                val userRef = db.collection("users").document(userId)
+                userRef.update("points", FieldValue.increment(20))
+                userRef.update("scan", FieldValue.increment(1))
+                userRef.get().addOnCompleteListener() { it1 ->
+                    if (it1.isSuccessful) {
+                        val points = it1.result["points"].toString().toInt()
+                        if (points == 100 || points == 220 || points == 360 || points == 580 || points == 800 || points == 1000) {
+                            userRef.update("level", FieldValue.increment(1))
+                        }
+                    }
                 }
             }
         }
+
     }
 }
