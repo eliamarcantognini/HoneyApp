@@ -5,6 +5,7 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -12,6 +13,7 @@ import com.google.mlkit.vision.barcode.Barcode
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 
 class MyImageAnalyzer(
@@ -19,6 +21,7 @@ class MyImageAnalyzer(
 ) : ImageAnalysis.Analyzer {
 
     private lateinit var scannerViewModel: ScannerViewModel
+    private var dialog = false
 
     override fun analyze(image: ImageProxy) {
         scanBarcode(image)
@@ -48,11 +51,17 @@ class MyImageAnalyzer(
         for (barcode in barcodes) {
             when (barcode.valueType) {
                 Barcode.TYPE_TEXT -> {
-                    val json = barcode.displayValue
-                    val honey = Json.decodeFromString(Honey.serializer(), json)
-                    scannerViewModel.update(honey)
-                    updateDatabase(honey)
-                    scannerViewModel.onScanComplete()
+                    val json = barcode.displayValue!!
+                    if (isJSONValid(json)) {
+                        val honey = Json.decodeFromString(Honey.serializer(), json)
+                        scannerViewModel.update(honey)
+                        updateDatabase(honey)
+                        scannerViewModel.onScanComplete()
+                    } else {
+                        if (!dialog) {
+                            showDialog()
+                        }
+                    }
                 }
             }
         }
@@ -105,6 +114,25 @@ class MyImageAnalyzer(
                 }
             }
         }
-
     }
+
+    private fun isJSONValid(json: String): Boolean {
+        try {
+            Json.decodeFromString(Honey.serializer(), json)
+            return true
+        } catch (ex: SerializationException) {
+            return false
+        }
+    }
+
+    private fun showDialog() {
+        val builder = MaterialAlertDialogBuilder(fragmentActivity)
+        builder
+            .setTitle("QR code non valido")
+            .setNeutralButton("OK") { dialog, id -> dialog.cancel() }
+            .show()
+        dialog = true
+    }
+
+
 }
