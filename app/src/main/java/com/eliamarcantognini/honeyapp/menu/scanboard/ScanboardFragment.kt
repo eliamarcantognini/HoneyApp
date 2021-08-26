@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -28,11 +29,8 @@ class ScanboardFragment : Fragment(), OnScanListener {
 
     private lateinit var viewModel: ScanboardViewModel
     private var _binding: ScanboardFragmentBinding? = null
-    private lateinit var layout: View
     private lateinit var adapter: HoneyScanAdapter
-    private lateinit var recyclerView: RecyclerView
     private lateinit var navController: NavController
-    private lateinit var fab: FloatingActionButton
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
@@ -49,25 +47,19 @@ class ScanboardFragment : Fragment(), OnScanListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = NavHostFragment.findNavController(this)
-        initFab()
-        initRecyclerView()
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-    }
-
-    private fun initFab() {
-        fab = requireActivity().findViewById(R.id.fab_scan)
-        fab.setOnClickListener{
-            navController.navigate(ScanboardFragmentDirections.actionScanboardFragmentToScannerFragment())
+        binding.apply {
+            progressBar.progressBar.visibility = View.VISIBLE
+            fabLayout.fabScan.setOnClickListener{
+                navController.navigate(ScanboardFragmentDirections.actionScanboardFragmentToScannerFragment())
+            }
+            recyclerView.setHasFixedSize(true)
+            adapter = HoneyScanAdapter(this@ScanboardFragment)
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
-    }
-
-    private fun initRecyclerView() {
-        recyclerView = requireActivity().findViewById(R.id.scanRecyclerView)
-        recyclerView.setHasFixedSize(true)
-        adapter = HoneyScanAdapter(this)
-        recyclerView.adapter = adapter
         loadScans()
     }
+
 
     private fun loadScans() {
         val db = FirebaseFirestore.getInstance()
@@ -81,21 +73,19 @@ class ScanboardFragment : Fragment(), OnScanListener {
 
                 doc.toObject(Scan::class.java)?.let { it1 -> data.add(it1) }
             }
-//            Log.d("SCANLIST1", data.toString())
-//
-//            Log.d("SCANLIST", data.toString())
             adapter.setData(data)
+            binding.apply { progressBar.progressBar.visibility = View.GONE }
         }
 
     }
 
     override fun onScanClick(position: Int) {
-        val holder = recyclerView.findViewHolderForAdapterPosition(position) as HoneyScanHolder
-        val honey = holder.honey
-        viewModel.update(honey)
-//        val name = (view.findViewById(R.id.honeyListName) as TextView).text
-//        val descr = (view.findViewById(R.id.honeyListName) as TextView).text
-        navController.navigate(ScanboardFragmentDirections.actionScanboardFragmentToHoneyInfoDialog())
+        binding.apply {
+            val holder = recyclerView.findViewHolderForAdapterPosition(position) as HoneyScanHolder
+            val honey = holder.honey
+            viewModel.update(honey)
+            navController.navigate(ScanboardFragmentDirections.actionScanboardFragmentToHoneyInfoDialog())
+        }
 
     }
 

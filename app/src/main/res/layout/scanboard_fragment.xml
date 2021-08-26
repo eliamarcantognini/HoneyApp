@@ -8,7 +8,7 @@
     tools:context=".menu.scanboard.ScanboardFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/scanRecyclerView"
+        android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/primaryLightColor"
@@ -26,7 +26,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-        <include layout="@layout/fab_scan" />
+        <include
+            android:id="@+id/fabLayout"
+            layout="@layout/fab_scan" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <include
+        android:id="@+id/progressBar"
+        layout="@layout/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

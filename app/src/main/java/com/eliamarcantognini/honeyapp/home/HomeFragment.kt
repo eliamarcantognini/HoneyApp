@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -85,6 +86,7 @@ class HomeFragment : Fragment() {
             }
 
         binding.apply {
+            progressBar.progressBar.visibility = View.VISIBLE
             scanBtn.setOnClickListener { requestPermissionLauncher.launch(Manifest.permission.CAMERA) }
             statusCard.setOnClickListener {
                 Games.getAchievementsClient(activity, viewModel.account.value!!)
@@ -150,12 +152,13 @@ class HomeFragment : Fragment() {
             } else {
                 binding.apply {
                     val user = it.toObject<User>()
-                    Log.d("DAOOO", user?.points.toString() + " ___ " + user?.scan.toString() )
+                    Log.d("DAOOO", user?.points.toString() + " ___ " + user?.scan.toString())
                     scanProfileTxt.text = user?.scan.toString()
                     pointProfileTxt.text = user?.points.toString()
                     levelProfileTxt.text = user?.level.toString()
                 }
             }
+            binding.apply { progressBar.progressBar.visibility = View.GONE }
         }
     }
 }

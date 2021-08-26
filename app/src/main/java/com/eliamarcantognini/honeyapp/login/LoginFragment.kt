@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -61,6 +62,7 @@ class LoginFragment : Fragment() {
         googleSignInClient =
             GoogleSignIn.getClient(requireContext(), signInOptions)
         binding.apply {
+            progressBar.progressBar.visibility = View.VISIBLE
             btnSignIn.setOnClickListener {
                 val signInIntent = googleSignInClient.signInIntent
                 requireActivity().startActivityFromFragment(
@@ -170,6 +172,7 @@ class LoginFragment : Fragment() {
             viewModel.updatePlayer(it)
             viewModel.updateFirebaseUser(firebaseUser)
             navController.navigate(LoginFragmentDirections.actionSplashFragmentToMainFragment())
+            binding.apply { progressBar.progressBar.visibility = View.GONE }
         }
 
     }
