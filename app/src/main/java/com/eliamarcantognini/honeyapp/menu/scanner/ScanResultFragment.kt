@@ -100,7 +100,7 @@ class ScanResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Update games stats
-        context.let {
+        requireActivity().let {
             val account = GoogleSignIn.getLastSignedInAccount(it)
             val gamesClient = Games.getGamesClient(it, account!!)
             view.let {
@@ -124,10 +124,8 @@ class ScanResultFragment : Fragment() {
                 val points = it1.toObject(User::class.java)!!.points!!.toLong()
                 Log.d("POINTS", points.toString())
                 Games.getLeaderboardsClient(it, account)
-//                    .submitScore(getString(R.string.leaderboard_scannerizzazioni), points);
-                    .submitScore("CgkI0OS03PMJEAIQAg", points)
+                    .submitScore(getString(R.string.leaderboard_scannerizzazioni), points);
             }
-
         }
     }
 }

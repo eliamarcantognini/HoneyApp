@@ -10,12 +10,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ServerTimestamp
 import com.google.mlkit.vision.barcode.Barcode
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
+import java.util.*
 
 class MyImageAnalyzer(
     private var fragmentActivity: FragmentActivity,
@@ -23,7 +25,9 @@ class MyImageAnalyzer(
 
     private lateinit var scannerViewModel: ScannerViewModel
     private var dialog = false
-    var scanned = false
+    private var scanned = false
+    @ServerTimestamp
+    private val timestamp: Date? = null
 
     override fun analyze(image: ImageProxy) {
         scanBarcode(image)
@@ -102,7 +106,8 @@ class MyImageAnalyzer(
                 "city" to honey.city,
                 "cap" to honey.cap,
                 "site" to honey.site,
-                "num" to honey.telephoneNumber
+                "num" to honey.telephoneNumber,
+                "time" to FieldValue.serverTimestamp()
             )
 //            scansRef.add(newScan) // se si usa la collection
             if (!it.exists()) {
