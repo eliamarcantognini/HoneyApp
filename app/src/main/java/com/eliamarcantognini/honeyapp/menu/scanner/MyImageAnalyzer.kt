@@ -1,6 +1,7 @@
 package com.eliamarcantognini.honeyapp.menu.scanner
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.fragment.app.FragmentActivity
@@ -22,6 +23,7 @@ class MyImageAnalyzer(
 
     private lateinit var scannerViewModel: ScannerViewModel
     private var dialog = false
+    var scanned = false
 
     override fun analyze(image: ImageProxy) {
         scanBarcode(image)
@@ -53,10 +55,12 @@ class MyImageAnalyzer(
                 Barcode.TYPE_TEXT -> {
                     val json = barcode.displayValue!!
                     if (isJSONValid(json)) {
-                        val honey = Json.decodeFromString(Honey.serializer(), json)
-                        scannerViewModel.update(honey)
-                        updateDatabase(honey)
-//                        scannerViewModel.onScanComplete()
+                        if (!scanned) {
+                            scanned = true
+                            val honey = Json.decodeFromString(Honey.serializer(), json)
+                            scannerViewModel.update(honey)
+                            updateDatabase()
+                        }
                     } else {
                         if (!dialog) {
                             showDialog()
@@ -65,12 +69,14 @@ class MyImageAnalyzer(
                 }
             }
         }
+//        scanned = false
     }
 
-    private fun updateDatabase(honey: Honey) {
+    private fun updateDatabase() {
         val db = FirebaseFirestore.getInstance()
         val auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser!!.uid
+        val honey = scannerViewModel.honey.value!!
         val token = honey.token!!
         val scansRef = db.collection("scans").document(userId).collection("data").document(token)
         scansRef.get().addOnSuccessListener {

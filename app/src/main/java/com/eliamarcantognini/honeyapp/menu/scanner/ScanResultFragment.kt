@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -104,7 +105,7 @@ class ScanResultFragment : Fragment() {
             val gamesClient = Games.getGamesClient(it, account!!)
             view.let {
                 gamesClient.setViewForPopups(view.findViewById(R.id.info_popup))
-//                gamesClient.setGravityForPopups(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
+                gamesClient.setGravityForPopups(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
             }
             // achievement
             // TODO. FIX POPUP NOT SHOWING
@@ -121,9 +122,10 @@ class ScanResultFragment : Fragment() {
             val userRef = db.collection("users").document(userId)
             userRef.get().addOnSuccessListener { it1 ->
                 val points = it1.toObject(User::class.java)!!.points!!.toLong()
-//                Log.d("POINTS", points.toString())
+                Log.d("POINTS", points.toString())
                 Games.getLeaderboardsClient(it, account)
-                    .submitScore(getString(R.string.leaderboard_scannerizzazioni), points);
+//                    .submitScore(getString(R.string.leaderboard_scannerizzazioni), points);
+                    .submitScore("CgkI0OS03PMJEAIQAg", points)
             }
 
         }
