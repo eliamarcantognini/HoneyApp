@@ -18,6 +18,7 @@ import com.eliamarcantognini.honeyapp.firestore.Scan
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -66,7 +67,7 @@ class ScanboardFragment : Fragment(), OnScanListener {
         val auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser!!.uid
 
-        val scansRef = db.collection("scans").document(userId).collection("data")
+        val scansRef = db.collection("scans").document(userId).collection("data").orderBy("time", Query.Direction.DESCENDING)
         scansRef.get().addOnSuccessListener {
             val data : ArrayList<Scan> = arrayListOf()
             for (doc in it.documents) {
