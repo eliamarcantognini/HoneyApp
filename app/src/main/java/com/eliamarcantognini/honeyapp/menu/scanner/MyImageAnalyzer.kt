@@ -56,7 +56,7 @@ class MyImageAnalyzer(
                         val honey = Json.decodeFromString(Honey.serializer(), json)
                         scannerViewModel.update(honey)
                         updateDatabase(honey)
-                        scannerViewModel.onScanComplete()
+//                        scannerViewModel.onScanComplete()
                     } else {
                         if (!dialog) {
                             showDialog()

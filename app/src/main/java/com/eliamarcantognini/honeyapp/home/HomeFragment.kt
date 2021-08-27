@@ -20,6 +20,7 @@ import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.HomeFragmentBinding
 import com.eliamarcantognini.honeyapp.firestore.User
 import com.eliamarcantognini.honeyapp.login.AccountViewModel
+import com.eliamarcantognini.honeyapp.menu.scanner.ScannerViewModel
 import com.google.android.gms.common.images.ImageManager
 import com.google.android.gms.games.Games
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -34,6 +35,7 @@ class HomeFragment : Fragment() {
     }
 
     private lateinit var viewModel: AccountViewModel
+    private lateinit var scannerViewModel: ScannerViewModel
     private lateinit var layout: View
     private var _binding: HomeFragmentBinding? = null
 
@@ -58,6 +60,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = HomeFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity()).get(AccountViewModel::class.java)
+        scannerViewModel = ViewModelProvider(requireActivity()).get(ScannerViewModel::class.java)
         val root: View = binding.root
         layout = binding.homeFragment
 
@@ -77,6 +80,7 @@ class HomeFragment : Fragment() {
                 ActivityResultContracts.RequestPermission()
             ) { isGranted: Boolean ->
                 if (isGranted) {
+                    scannerViewModel.onScanResultComplete()
                     navController.navigate(HomeFragmentDirections.actionMainFragmentToScannerFragment())
                     Log.i("Permission: ", "Granted")
                 } else {
