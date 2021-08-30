@@ -8,7 +8,7 @@
     android:layout_marginTop="96dp"
     android:layout_marginRight="32dp"
     android:layout_marginBottom="96dp"
-    android:backgroundTint="@color/primaryColor"
+    android:backgroundTint="@color/primaryLightColor"
     android:padding="8dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp">
@@ -42,7 +42,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
             android:background="@color/secondaryColor"
             android:elevation="8dp"
@@ -52,7 +51,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/siteBtn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/firmCityCapTxt"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize"
             app:srcCompat="@drawable/outline_place_white_48"
             app:strokeColor="@color/primaryTextColor"
@@ -62,7 +60,6 @@
             android:id="@+id/siteBtn"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
             android:background="@color/secondaryColor"
             android:elevation="8dp"
@@ -73,7 +70,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/callBtn"
             app:layout_constraintStart_toEndOf="@+id/locationBtn"
-            app:layout_constraintTop_toBottomOf="@+id/firmCityCapTxt"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize"
             app:srcCompat="@drawable/outline_language_white_48"
             app:strokeColor="@color/primaryTextColor"
@@ -83,7 +79,6 @@
             android:id="@+id/callBtn"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
             android:background="@color/secondaryColor"
@@ -94,7 +89,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/siteBtn"
-            app:layout_constraintTop_toBottomOf="@+id/firmCityCapTxt"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize"
             app:srcCompat="@drawable/outline_phone_white_48"
             app:strokeColor="@color/primaryTextColor"
@@ -102,15 +96,15 @@
 
         <TextView
             android:id="@+id/honeyNameTxt"
-            android:textAlignment="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="sans-serif-black"
-            android:textColor="@color/primaryTextColor"
             android:text="@string/nome_del_miele"
+            android:textAlignment="center"
+            android:textColor="@color/primaryTextColor"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -118,30 +112,30 @@
 
         <TextView
             android:id="@+id/honeyDescTxt"
-            android:textAlignment="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/primaryTextColor"
             android:text="@string/descrizione"
+            android:textAlignment="center"
+            android:textColor="@color/primaryTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/honeyNameTxt" />
 
         <TextView
             android:id="@+id/firmTxt"
-            android:textAlignment="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@color/primaryTextColor"
             android:text="@string/nome_del_produttore"
+            android:textAlignment="center"
+            android:textColor="@color/primaryTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/honeyDescTxt" />
@@ -173,6 +167,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/firmAddrTxt" />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinatorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/firmCityCapTxt">
+
+            <include
+                android:id="@+id/star_info"
+                layout="@layout/star_info" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

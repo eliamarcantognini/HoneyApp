@@ -95,26 +95,12 @@
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|end">
+        android:layout_gravity="end|top"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp">
 
-
-
-        <ImageView
-            android:id="@+id/starImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:srcCompat="@android:drawable/btn_star_big_off" />
-
-<!--        <TextView-->
-<!--            android:id="@+id/starNumberTxt"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/_0"-->
-<!--            android:textAppearance="?attr/textAppearanceHeadline6"-->
-<!--            android:textColor="@color/secondaryTextColor"-->
-<!--            app:layout_constraintEnd_toStartOf="@+id/starImg"-->
-<!--            tools:layout_editor_absoluteY="16dp" />-->
+        <include
+            android:id="@+id/starList"
+            layout="@layout/star_resume"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </com.google.android.material.card.MaterialCardView>
