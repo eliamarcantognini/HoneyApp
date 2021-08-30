@@ -27,13 +27,16 @@ class HoneyScanAdapter (onScanListener: OnScanListener) : RecyclerView.Adapter<H
     }
 
     override fun onBindViewHolder(holder: HoneyScanHolder, position: Int) {
-        Log.d("SCANLISTHOLDER", "1 ++++" +honeyScansList.toString())
-        Log.d("SCANLISTHOLDER", "2 ++++" +honeyScansList[position].firm)
-        holder.honey = honeyScansList[position]
+        Log.d("SCANLISTADAPTER", honeyScansList.toString())
+        holder.scan = honeyScansList[position]
         holder.description.text = honeyScansList[position].desc
         holder.firm.text = honeyScansList[position].firm
         holder.name.text = honeyScansList[position].type
         holder.image.setImageResource(R.drawable.honey)
+        holder.starNumber.text = honeyScansList[position].stars.toString()
+        if (honeyScansList[position].stars!! > 0) {
+            holder.starImage.setImageResource(R.drawable.ic_star_primarycolor_24)
+        }
 
     }
 

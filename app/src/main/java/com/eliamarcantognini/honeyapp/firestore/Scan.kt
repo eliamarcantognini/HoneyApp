@@ -9,4 +9,6 @@ data class Scan(
     val cap: String? = null,
     val site: String? = null,
     val num: String? = null,
+    var stars: Int? = null,
+    val token: String? = null
 )

@@ -103,11 +103,13 @@ class MyImageAnalyzer(
                 "firm" to honey.firmName,
                 "desc" to honey.description,
                 "addr" to honey.address,
+                "token" to token,
                 "city" to honey.city,
                 "cap" to honey.cap,
                 "site" to honey.site,
                 "num" to honey.telephoneNumber,
-                "time" to FieldValue.serverTimestamp()
+                "time" to FieldValue.serverTimestamp(),
+                "stars" to 0
             )
 //            scansRef.add(newScan) // se si usa la collection
             if (!it.exists()) {

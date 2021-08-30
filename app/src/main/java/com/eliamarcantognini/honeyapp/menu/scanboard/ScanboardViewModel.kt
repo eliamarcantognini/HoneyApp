@@ -5,23 +5,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.eliamarcantognini.honeyapp.firestore.Scan
-import com.eliamarcantognini.honeyapp.menu.scanner.Honey
 
 
 class ScanboardViewModel : ViewModel() {
 
-    private val _honey = MutableLiveData<Scan>()
-    val honey: LiveData<Scan>
-        get() = _honey
+    private val _scan = MutableLiveData<Scan>()
+    val scan: LiveData<Scan>
+        get() = _scan
 
     init {
-        val initHoney = Scan("", "", "", "", "", "", "", "")
-        _honey.value = initHoney
+        val initScan = Scan("", "", "", "", "", "", "", "", 0, "")
+        _scan.value = initScan
     }
 
 
     fun update(scanned: Scan) {
         Log.d("SCANN", "HEHEHE")
-        _honey.value = scanned
+        _scan.value = scanned
     }
 }

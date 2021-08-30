@@ -1,21 +1,17 @@
 package com.eliamarcantognini.honeyapp.menu.scanboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.ScanboardFragmentBinding
 import com.eliamarcantognini.honeyapp.firestore.Scan
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -71,8 +67,9 @@ class ScanboardFragment : Fragment(), OnScanListener {
         scansRef.get().addOnSuccessListener {
             val data : ArrayList<Scan> = arrayListOf()
             for (doc in it.documents) {
-
-                doc.toObject(Scan::class.java)?.let { it1 -> data.add(it1) }
+                doc.toObject(Scan::class.java)?.let { it1 -> data.add(it1); Log.d("AAA",
+                    it1.stars!!.toString()
+                )}
             }
             adapter.setData(data)
             binding.apply { progressBar.progressBar.visibility = View.GONE }
@@ -83,8 +80,8 @@ class ScanboardFragment : Fragment(), OnScanListener {
     override fun onScanClick(position: Int) {
         binding.apply {
             val holder = recyclerView.findViewHolderForAdapterPosition(position) as HoneyScanHolder
-            val honey = holder.honey
-            viewModel.update(honey)
+            val scan = holder.scan
+            viewModel.update(scan)
             navController.navigate(ScanboardFragmentDirections.actionScanboardFragmentToHoneyInfoDialog())
         }
 
