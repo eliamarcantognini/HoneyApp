@@ -5,17 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.eliamarcantognini.honeyapp.databinding.MainActivityBinding
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: MainActivityBinding
-//    private lateinit var googleSignInClient: GoogleSignInClient
+
+    //    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {

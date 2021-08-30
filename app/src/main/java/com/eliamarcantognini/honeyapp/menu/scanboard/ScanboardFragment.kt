@@ -16,13 +16,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ScanboardFragment : Fragment(), OnScanListener {
-
-    companion object {
-        fun newInstance() = ScanboardFragment()
-    }
+//
+//    companion object {
+//        fun newInstance() = ScanboardFragment()
+//    }
 
     private lateinit var viewModel: ScanboardViewModel
     private var _binding: ScanboardFragmentBinding? = null
@@ -38,6 +37,20 @@ class ScanboardFragment : Fragment(), OnScanListener {
     ): View? {
         _binding = ScanboardFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity()).get(ScanboardViewModel::class.java)
+        viewModel.scan.observe(requireActivity(), {
+            Log.d("PROVA", "osservo2");
+            binding.apply {
+                progressBar.progressBar.visibility = View.VISIBLE
+            }
+            loadScans()
+        })
+        viewModel.stars.observe(requireActivity(), {
+            Log.d("PROVA", "osservo");
+            binding.apply {
+                progressBar.progressBar.visibility = View.VISIBLE
+            }
+            loadScans()
+        })
         return binding.root
     }
 
@@ -46,7 +59,7 @@ class ScanboardFragment : Fragment(), OnScanListener {
         navController = NavHostFragment.findNavController(this)
         binding.apply {
             progressBar.progressBar.visibility = View.VISIBLE
-            fabLayout.fabScan.setOnClickListener{
+            fabLayout.fabScan.setOnClickListener {
                 navController.navigate(ScanboardFragmentDirections.actionScanboardFragmentToScannerFragment())
             }
             recyclerView.setHasFixedSize(true)
@@ -58,18 +71,17 @@ class ScanboardFragment : Fragment(), OnScanListener {
     }
 
 
-    private fun loadScans() {
+    fun loadScans() {
         val db = FirebaseFirestore.getInstance()
         val auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser!!.uid
 
-        val scansRef = db.collection("scans").document(userId).collection("data").orderBy("time", Query.Direction.DESCENDING)
+        val scansRef = db.collection("scans").document(userId).collection("data")
+            .orderBy("time", Query.Direction.DESCENDING)
         scansRef.get().addOnSuccessListener {
-            val data : ArrayList<Scan> = arrayListOf()
+            val data: ArrayList<Scan> = arrayListOf()
             for (doc in it.documents) {
-                doc.toObject(Scan::class.java)?.let { it1 -> data.add(it1); Log.d("AAA",
-                    it1.stars!!.toString()
-                )}
+                doc.toObject(Scan::class.java)?.let { it1 -> data.add(it1) }
             }
             adapter.setData(data)
             binding.apply { progressBar.progressBar.visibility = View.GONE }
@@ -81,10 +93,10 @@ class ScanboardFragment : Fragment(), OnScanListener {
         binding.apply {
             val holder = recyclerView.findViewHolderForAdapterPosition(position) as HoneyScanHolder
             val scan = holder.scan
-            viewModel.update(scan)
+            viewModel.updateScan(scan)
             navController.navigate(ScanboardFragmentDirections.actionScanboardFragmentToHoneyInfoDialog())
         }
-
     }
+
 
 }

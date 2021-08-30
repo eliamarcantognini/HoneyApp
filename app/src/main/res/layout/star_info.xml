@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"
-        app:srcCompat="@drawable/star_outline_primarydark_24"
+        app:srcCompat="@drawable/ic_star_outline_48"
         android:contentDescription="@string/star" />
 
 
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"
-        app:srcCompat="@drawable/star_outline_primarydark_24"
+        app:srcCompat="@drawable/ic_star_outline_48"
         android:contentDescription="@string/star" />
 
     <ImageView
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"
-        app:srcCompat="@drawable/star_outline_primarydark_24"
+        app:srcCompat="@drawable/ic_star_outline_48"
         android:contentDescription="@string/star" />
 
     <ImageView
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"
-        app:srcCompat="@drawable/star_outline_primarydark_24"
+        app:srcCompat="@drawable/ic_star_outline_48"
         android:contentDescription="@string/star" />
 
     <ImageView
@@ -44,9 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"
-        app:srcCompat="@drawable/star_outline_primarydark_24"
+        app:srcCompat="@drawable/ic_star_outline_48"
         android:contentDescription="@string/star" />
-
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>

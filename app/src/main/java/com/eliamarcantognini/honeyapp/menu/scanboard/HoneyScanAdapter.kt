@@ -1,24 +1,17 @@
 package com.eliamarcantognini.honeyapp.menu.scanboard
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.firestore.Scan
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
-class HoneyScanAdapter (onScanListener: OnScanListener) : RecyclerView.Adapter<HoneyScanHolder>() {
-
+class HoneyScanAdapter(private val onScanListener: OnScanListener) :
+    RecyclerView.Adapter<HoneyScanHolder>() {
 
     private val honeyScansList = ArrayList<Scan>()
-    private val onScanListener: OnScanListener = onScanListener
-//
-//    constructor(onScanListener: OnScanListener){
-//        this.onScanListener = onScanListener
-//    }
-//    private val honeyScansFullList = ArrayList<HoneyScan>()
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HoneyScanHolder {
         val view = LayoutInflater.from(parent.context)
@@ -27,18 +20,27 @@ class HoneyScanAdapter (onScanListener: OnScanListener) : RecyclerView.Adapter<H
     }
 
     override fun onBindViewHolder(holder: HoneyScanHolder, position: Int) {
-        Log.d("SCANLISTADAPTER", honeyScansList.toString())
         holder.scan = honeyScansList[position]
         holder.description.text = honeyScansList[position].desc
         holder.firm.text = honeyScansList[position].firm
         holder.name.text = honeyScansList[position].type
         holder.image.setImageResource(R.drawable.honey)
         holder.starNumber.text = honeyScansList[position].stars.toString()
+        val db = FirebaseFirestore.getInstance()
+        val auth = FirebaseAuth.getInstance()
+        val userId = auth.currentUser!!.uid
+        val token = holder.scan.token
+        val scansRef = db.collection("scans").document(userId).collection("data").document(token!!)
+        scansRef.get().addOnSuccessListener {
+            holder.starNumber.text = it.toObject(Scan::class.java)!!.stars!!.toInt().toString()
+        }
         if (honeyScansList[position].stars!! > 0) {
-            holder.starImage.setImageResource(R.drawable.ic_star_primarycolor_24)
+            holder.starImage.setImageResource(R.drawable.ic_star_24)
         }
 
     }
+
+
 
     override fun getItemCount(): Int {
         return honeyScansList.size

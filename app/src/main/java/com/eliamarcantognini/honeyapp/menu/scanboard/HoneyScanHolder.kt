@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.firestore.Scan
 
-class HoneyScanHolder(view: View, listener: OnScanListener): RecyclerView.ViewHolder(view), OnClickListener {
+class HoneyScanHolder(view: View, listener: OnScanListener) : RecyclerView.ViewHolder(view),
+    OnClickListener {
     var name: TextView = view.findViewById(R.id.honeyListName)
     var firm: TextView = view.findViewById(R.id.honeyListFirm)
     var description: TextView = view.findViewById(R.id.honeyListDesc)

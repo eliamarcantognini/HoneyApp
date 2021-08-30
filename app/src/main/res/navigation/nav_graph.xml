@@ -31,7 +31,11 @@
             app:destination="@id/scannerFragment" />
         <action
             android:id="@+id/action_scanboardFragment_to_honeyInfoDialog"
-            app:destination="@id/honeyInfoDialog" />
+            app:destination="@id/honeyInfoDialog" >
+            <argument
+                android:name="startTxt"
+                android:defaultValue="0" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/scannerFragment"

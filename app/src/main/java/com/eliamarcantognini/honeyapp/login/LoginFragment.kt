@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -49,6 +48,7 @@ class LoginFragment : Fragment() {
             .requestScopes(Drive.SCOPE_APPFOLDER)
             .build()
         auth = FirebaseAuth.getInstance()
+        viewModel = ViewModelProvider(requireActivity()).get(AccountViewModel::class.java)
 
         return binding.root
     }
@@ -58,7 +58,6 @@ class LoginFragment : Fragment() {
         val context = requireContext()
         navController = NavHostFragment.findNavController(this)
 
-        viewModel = ViewModelProvider(requireActivity()).get(AccountViewModel::class.java)
         googleSignInClient =
             GoogleSignIn.getClient(requireContext(), signInOptions)
         binding.apply {

@@ -6,4 +6,4 @@ data class User(
     val level: Int? = null,
     val points: Int? = null,
     val scan: Int? = null
-    )
+)

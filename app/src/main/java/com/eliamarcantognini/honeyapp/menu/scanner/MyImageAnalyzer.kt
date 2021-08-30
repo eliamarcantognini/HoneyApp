@@ -1,11 +1,11 @@
 package com.eliamarcantognini.honeyapp.menu.scanner
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import com.eliamarcantognini.honeyapp.firestore.User
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -26,6 +26,7 @@ class MyImageAnalyzer(
     private lateinit var scannerViewModel: ScannerViewModel
     private var dialog = false
     private var scanned = false
+
     @ServerTimestamp
     private val timestamp: Date? = null
 
@@ -73,7 +74,6 @@ class MyImageAnalyzer(
                 }
             }
         }
-//        scanned = false
     }
 
     private fun updateDatabase() {
@@ -117,13 +117,12 @@ class MyImageAnalyzer(
                 val userRef = db.collection("users").document(userId)
                 userRef.update("points", FieldValue.increment(20))
                 userRef.update("scan", FieldValue.increment(1))
-                userRef.get().addOnCompleteListener() { it1 ->
-                    if (it1.isSuccessful) {
-                        val points = it1.result["points"].toString().toInt()
-                        if (points == 100 || points == 220 || points == 360 || points == 580 || points == 800 || points == 1000) {
-                            userRef.update("level", FieldValue.increment(1))
-                        }
+                userRef.get().addOnSuccessListener { it1 ->
+                    val points = it1.toObject(User::class.java)!!.points!!.toInt()
+                    if (points == 100 || points == 220 || points == 360 || points == 580 || points == 800 || points == 1000) {
+                        userRef.update("level", FieldValue.increment(1))
                     }
+
                 }
             }
         }

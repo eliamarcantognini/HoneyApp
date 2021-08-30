@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.games.Player
 import com.google.android.gms.games.PlayerLevel
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 class AccountViewModel : ViewModel() {
@@ -35,8 +34,6 @@ class AccountViewModel : ViewModel() {
     val imageUri: Uri?
         get() = _player.value?.hiResImageUri
 
-    val playerLevel: PlayerLevel?
-        get() = _player.value?.levelInfo?.currentLevel
 
 
     fun updatePlayer(signedPlayer: Player?) {
