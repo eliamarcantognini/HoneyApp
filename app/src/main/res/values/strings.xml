@@ -41,4 +41,5 @@
     <string name="complimenti">Complimenti!</string>
     <string name="hai_guadagnato_20_punti">Hai guadagnato 20 punti!</string>
     <string name="punti_rimanenti">Ti rimangono %1$d punti al prossimo livello!</string>
+    <string name="_0">0</string>
 </resources>
