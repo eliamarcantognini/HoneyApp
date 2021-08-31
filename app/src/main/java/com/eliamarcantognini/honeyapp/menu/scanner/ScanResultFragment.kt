@@ -48,22 +48,57 @@ class ScanResultFragment : Fragment() {
         _binding = ScanResultFragmentBinding.inflate(inflater, container, false)
 
         val activity = requireActivity()
+        var res = R.drawable.honey
         viewModel = ViewModelProvider(activity).get(ScannerViewModel::class.java)
         accountViewModel = ViewModelProvider(activity).get(AccountViewModel::class.java)
         binding.apply {
             when (viewModel.honey.value?.type) {
-                0 -> honeyNameTxt.text = getString(R.string.millefiori)
-                1 -> honeyNameTxt.text = getString(R.string.castagno)
-                2 -> honeyNameTxt.text = getString(R.string.acacia)
-                3 -> honeyNameTxt.text = getString(R.string.eucalipto)
-                4 -> honeyNameTxt.text = getString(R.string.girasole)
-                5 -> honeyNameTxt.text = getString(R.string.agrumi)
-                6 -> honeyNameTxt.text = getString(R.string.timo)
-                7 -> honeyNameTxt.text = getString(R.string.tiglio)
-                8 -> honeyNameTxt.text = getString(R.string.melata)
-                9 -> honeyNameTxt.text = getString(R.string.sulla)
-                10 -> honeyNameTxt.text = getString(R.string.altromiele)
+                0 -> {
+                    honeyNameTxt.text = getString(R.string.millefiori)
+                    res = R.drawable.millefiori
+                }
+                1 -> {
+                    honeyNameTxt.text = getString(R.string.castagno)
+                    res = R.drawable.castagno
+                }
+                2 -> {
+                    honeyNameTxt.text = getString(R.string.acacia)
+                    res = R.drawable.ic_acacia
+                }
+                3 -> {
+                    honeyNameTxt.text = getString(R.string.eucalipto)
+                    res = R.drawable.eucalipto
+                }
+                4 -> {
+                    honeyNameTxt.text = getString(R.string.girasole)
+                    res = R.drawable.girasole
+                }
+                5 -> {
+                    honeyNameTxt.text = getString(R.string.agrumi)
+                    res = R.drawable.agrumi
+                }
+                6 -> {
+                    honeyNameTxt.text = getString(R.string.timo)
+                    res = R.drawable.timo
+                }
+                7 -> {
+                    honeyNameTxt.text = getString(R.string.tiglio)
+                    res = R.drawable.tiglio
+                }
+                8 -> {
+                    honeyNameTxt.text = getString(R.string.melata)
+                    res = R.drawable.melata
+                }
+                9 -> {
+                    honeyNameTxt.text = getString(R.string.sulla)
+                    res = R.drawable.sulla
+                }
+                10 -> {
+                    honeyNameTxt.text = getString(R.string.altromiele)
+                    res = R.drawable.ic_altro
+                }
             }
+            honeyImg.setImageResource(res)
             honeyDescTxt.text = viewModel.honey.value?.description
             firmTxt.text = viewModel.honey.value?.firmName
             // If the site is given, it renders the button to open the browser with the url given

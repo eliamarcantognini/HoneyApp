@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.databinding.ScanboardFragmentBinding
 import com.eliamarcantognini.honeyapp.firestore.Scan
 import com.google.firebase.auth.FirebaseAuth
@@ -81,12 +82,49 @@ class ScanboardFragment : Fragment(), OnScanListener {
         scansRef.get().addOnSuccessListener {
             val data: ArrayList<Scan> = arrayListOf()
             for (doc in it.documents) {
-                doc.toObject(Scan::class.java)?.let { it1 -> data.add(it1) }
+                doc.toObject(Scan::class.java)?.let { it1 ->
+                    data.add(it1)
+                    when (it1.type) {
+                        "Miele Millefiori" -> {
+                            it1.resID = R.drawable.millefiori
+                        }
+                        "Miele di Castagno" -> {
+                            it1.resID = R.drawable.castagno
+                        }
+                        "Miele di Acacia" -> {
+                            it1.resID = R.drawable.ic_acacia
+                        }
+                        "Miele di Eucalipto" -> {
+                            it1.resID = R.drawable.eucalipto
+                        }
+                        "Miele di Girasole" -> {
+                            it1.resID = R.drawable.girasole
+                        }
+                        "Miele di Agrumi" -> {
+                            it1.resID = R.drawable.agrumi
+                        }
+                        "Miele di Timo" -> {
+                            it1.resID = R.drawable.timo
+                        }
+                        "Miele di Tiglio" -> {
+                            it1.resID = R.drawable.tiglio
+                        }
+                        "Miele di Melata" -> {
+                            it1.resID = R.drawable.melata
+                        }
+                        "Miele di Sulla" -> {
+                            it1.resID = R.drawable.sulla
+                        }
+                        "Miele molto raro" -> {
+                            it1.resID = R.drawable.ic_altro
+                        }
+                    }
+                }
+
             }
             adapter.setData(data)
             binding.apply { progressBar.progressBar.visibility = View.GONE }
         }
-
     }
 
     override fun onScanClick(position: Int) {

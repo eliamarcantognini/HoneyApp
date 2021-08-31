@@ -34,6 +34,7 @@ class HoneyInfoDialog : DialogFragment() {
             honeyImg.setImageResource(R.drawable.honey)
             honeyNameTxt.text = viewModel.scan.value?.type
             honeyDescTxt.text = viewModel.scan.value?.desc
+            honeyImg.setImageResource(viewModel.scan.value?.resID!!)
             firmTxt.text = viewModel.scan.value?.firm
             firmAddrTxt.text =
                 viewModel.scan.value?.addr

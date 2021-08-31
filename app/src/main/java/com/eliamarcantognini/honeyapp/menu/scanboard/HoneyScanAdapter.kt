@@ -24,8 +24,9 @@ class HoneyScanAdapter(private val onScanListener: OnScanListener) :
         holder.description.text = honeyScansList[position].desc
         holder.firm.text = honeyScansList[position].firm
         holder.name.text = honeyScansList[position].type
-        holder.image.setImageResource(R.drawable.honey)
+        holder.image.setImageResource(honeyScansList[position].resID!!)
         holder.starNumber.text = honeyScansList[position].stars.toString()
+
         val db = FirebaseFirestore.getInstance()
         val auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser!!.uid

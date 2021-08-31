@@ -16,7 +16,7 @@ class HoneyScanHolder(view: View, listener: OnScanListener) : RecyclerView.ViewH
     var starNumber: TextView = view.findViewById(R.id.starNumberTxt)
     var image: ImageView = view.findViewById(R.id.honeyListImg)
     var starImage: ImageView = view.findViewById(R.id.starImg)
-    var scan: Scan = Scan("Demo", "Demo", "Demo", "Demo", "Demo", "Demo", "", "", 0, "")
+    var scan: Scan = Scan("Demo", "Demo", "Demo", "Demo", "Demo", "Demo", "", "", 0, "", R.drawable.honey)
     private var onScanListener: OnScanListener = listener
 
     init {

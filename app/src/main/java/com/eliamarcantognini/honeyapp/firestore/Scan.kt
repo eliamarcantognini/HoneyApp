@@ -10,5 +10,6 @@ data class Scan(
     val site: String? = null,
     val num: String? = null,
     var stars: Int? = null,
-    val token: String? = null
+    val token: String? = null,
+    var resID: Int? = null
 )
