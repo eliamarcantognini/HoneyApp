@@ -2,6 +2,7 @@ package com.eliamarcantognini.honeyapp.menu.scanboard
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.eliamarcantognini.honeyapp.R
 import com.eliamarcantognini.honeyapp.firestore.Scan
@@ -25,6 +26,7 @@ class HoneyScanAdapter(private val onScanListener: OnScanListener) :
         holder.firm.text = honeyScansList[position].firm
         holder.name.text = honeyScansList[position].type
         holder.image.setImageResource(honeyScansList[position].resID!!)
+//        holder.image.scaleType = ImageView.ScaleType.FIT_CENTER
         holder.starNumber.text = honeyScansList[position].stars.toString()
 
         val db = FirebaseFirestore.getInstance()

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:backgroundTint="@color/secondaryColor"
+    android:backgroundTint="@color/secondaryDarkColor"
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp">
 
@@ -26,17 +26,18 @@
                 android:id="@+id/honeyListImg"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                android:background="@color/primaryLightColor"
+                android:background="@color/secondaryLightColor"
                 android:contentDescription="@string/honeyimage"
                 android:padding="4dp"
                 android:scaleType="fitCenter"
+                app:contentPadding="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize"
                 app:srcCompat="@drawable/honey"
-                app:strokeColor="@color/secondaryDarkColor"
+                app:strokeColor="@color/primaryLightColor"
                 app:strokeWidth="2dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
