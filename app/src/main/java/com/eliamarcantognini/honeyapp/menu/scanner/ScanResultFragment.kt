@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.util.Range
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.games.Games
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlin.random.Random
 
 class ScanResultFragment : Fragment() {
 
@@ -99,8 +101,10 @@ class ScanResultFragment : Fragment() {
                 }
             }
             honeyImg.setImageResource(res)
+
             honeyDescTxt.text = viewModel.honey.value?.description
             firmTxt.text = viewModel.honey.value?.firmName
+
             // If the site is given, it renders the button to open the browser with the url given
             viewModel.honey.value?.site?.let {
                 siteBtn.visibility = View.VISIBLE
@@ -123,6 +127,15 @@ class ScanResultFragment : Fragment() {
                     )
                 )
                 startActivity(Intent(Intent.ACTION_VIEW, geo))
+            }
+
+            val db = FirebaseFirestore.getInstance()
+            val curiositiesRef = db.collection("curiosities").document("data")
+            curiositiesRef.get().addOnSuccessListener {
+                val curiosities = it.get("array") as List<String>
+                val index = IntRange(0, curiosities.size - 1).random()
+                val cur = curiosities[index]
+                curiositaTxt.text = cur
             }
         }
 
