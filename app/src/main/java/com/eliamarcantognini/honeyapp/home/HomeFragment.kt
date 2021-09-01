@@ -142,10 +142,10 @@ class HomeFragment : Fragment() {
         val auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser!!.uid
 
-        val userRef = db.collection("users").document(userId!!)
+        val userRef = db.collection("users").document(userId)
         userRef.get().addOnSuccessListener {
+            var user = User(viewModel.name, viewModel.displayName, 1, 0, 0)
             if (!it.exists()) {
-                val user = User(viewModel.name, viewModel.displayName, 1, 0, 0)
                 userRef.set(user)
                 binding.apply {
                     scanProfileTxt.text = user.scan.toString()
@@ -154,14 +154,37 @@ class HomeFragment : Fragment() {
                 }
             } else {
                 binding.apply {
-                    val user = it.toObject<User>()
-                    Log.d("DAOOO", user?.points.toString() + " ___ " + user?.scan.toString())
+                    user = it.toObject<User>()!!
                     scanProfileTxt.text = user?.scan.toString()
                     pointProfileTxt.text = user?.points.toString()
                     levelProfileTxt.text = user?.level.toString()
                 }
             }
-            binding.apply { progressBar.progressBar.visibility = View.GONE }
+            binding.apply {
+                progressBar.progressBar.visibility = View.GONE
+                when (user.level) {
+                    1 -> {
+                        profileImg.strokeWidth = 8F
+                    }
+                    2 -> {
+                        profileImg.setStrokeColorResource(R.color.primaryLightColor)
+                        profileImg.strokeWidth = 8F
+                    }
+                    3 -> {
+                        profileImg.setStrokeColorResource(R.color.primaryDarkColor)
+                        profileImg.strokeWidth = 8F
+                    }
+                    4 -> {
+                        profileImg.setStrokeColorResource(R.color.primaryDarkColor)
+                        profileImg.strokeWidth = 16F
+                    }
+                    5 -> {
+                        profileImg.setStrokeColorResource(R.color.primaryColor)
+                        profileImg.strokeWidth = 16F
+                        profileImg.elevation = 48F
+                    }
+                }
+            }
         }
     }
 }
