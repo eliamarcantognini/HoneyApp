@@ -27,8 +27,8 @@ class MyImageAnalyzer(
     private var dialog = false
     private var scanned = false
 
-    @ServerTimestamp
-    private val timestamp: Date? = null
+//    @ServerTimestamp
+//    private val timestamp: Date? = null
 
     override fun analyze(image: ImageProxy) {
         scanBarcode(image)
@@ -84,35 +84,34 @@ class MyImageAnalyzer(
         val token = honey.token!!
         val scansRef = db.collection("scans").document(userId).collection("data").document(token)
         scansRef.get().addOnSuccessListener {
-            var honeyType = ""
-            when (honey.type) {
-                0 -> honeyType = "Miele Millefiori"
-                1 -> honeyType = "Miele di Castagno"
-                2 -> honeyType = "Miele di Acacia"
-                3 -> honeyType = "Miele di Eucalipto"
-                4 -> honeyType = "Miele di Girasole"
-                5 -> honeyType = "Miele di Agrumi"
-                6 -> honeyType = "Miele di Timo"
-                7 -> honeyType = "Miele di Tiglio"
-                8 -> honeyType = "Miele di Melata"
-                9 -> honeyType = "Miele di Sulla"
-                10 -> honeyType = "Miele molto raro"
-            }
-            val newScan = hashMapOf(
-                "type" to honeyType,
-                "firm" to honey.firmName,
-                "desc" to honey.description,
-                "addr" to honey.address,
-                "token" to token,
-                "city" to honey.city,
-                "cap" to honey.cap,
-                "site" to honey.site,
-                "num" to honey.telephoneNumber,
-                "time" to FieldValue.serverTimestamp(),
-                "stars" to 0
-            )
-//            scansRef.add(newScan) // se si usa la collection
             if (!it.exists()) {
+                var honeyType = ""
+                when (honey.type) {
+                    0 -> honeyType = "Miele Millefiori"
+                    1 -> honeyType = "Miele di Castagno"
+                    2 -> honeyType = "Miele di Acacia"
+                    3 -> honeyType = "Miele di Eucalipto"
+                    4 -> honeyType = "Miele di Girasole"
+                    5 -> honeyType = "Miele di Agrumi"
+                    6 -> honeyType = "Miele di Timo"
+                    7 -> honeyType = "Miele di Tiglio"
+                    8 -> honeyType = "Miele di Melata"
+                    9 -> honeyType = "Miele di Sulla"
+                    10 -> honeyType = "Miele molto raro"
+                }
+                val newScan = hashMapOf(
+                    "type" to honeyType,
+                    "firm" to honey.firmName,
+                    "desc" to honey.description,
+                    "addr" to honey.address,
+                    "token" to token,
+                    "city" to honey.city,
+                    "cap" to honey.cap,
+                    "site" to honey.site,
+                    "num" to honey.telephoneNumber,
+                    "time" to FieldValue.serverTimestamp(),
+                    "stars" to 0
+                )
                 scansRef.set(newScan)
                 val userRef = db.collection("users").document(userId)
                 userRef.update("points", FieldValue.increment(20))

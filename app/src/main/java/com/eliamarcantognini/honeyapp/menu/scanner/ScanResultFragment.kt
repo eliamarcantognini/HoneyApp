@@ -134,8 +134,7 @@ class ScanResultFragment : Fragment() {
             curiositiesRef.get().addOnSuccessListener {
                 val curiosities = it.get("array") as List<String>
                 val index = IntRange(0, curiosities.size - 1).random()
-                val cur = curiosities[index]
-                curiositaTxt.text = cur
+                curiositaTxt.text = curiosities[index]
             }
         }
 

@@ -155,9 +155,10 @@ class HomeFragment : Fragment() {
             } else {
                 binding.apply {
                     user = it.toObject<User>()!!
-                    scanProfileTxt.text = user?.scan.toString()
-                    pointProfileTxt.text = user?.points.toString()
-                    levelProfileTxt.text = user?.level.toString()
+                    nameProfileTxt.text = user.name
+                    scanProfileTxt.text = user.scan.toString()
+                    pointProfileTxt.text = user.points.toString()
+                    levelProfileTxt.text = user.level.toString()
                 }
             }
             binding.apply {

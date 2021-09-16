@@ -19,10 +19,6 @@ import com.google.firebase.firestore.Query
 import java.util.*
 
 class ScanboardFragment : Fragment(), OnScanListener {
-//
-//    companion object {
-//        fun newInstance() = ScanboardFragment()
-//    }
 
     private lateinit var viewModel: ScanboardViewModel
     private var _binding: ScanboardFragmentBinding? = null
@@ -85,42 +81,19 @@ class ScanboardFragment : Fragment(), OnScanListener {
                 doc.toObject(Scan::class.java)?.let { it1 ->
                     data.add(it1)
                     when (it1.type) {
-                        "Miele Millefiori" -> {
-                            it1.resID = R.drawable.millefiori
-                        }
-                        "Miele di Castagno" -> {
-                            it1.resID = R.drawable.castagno
-                        }
-                        "Miele di Acacia" -> {
-                            it1.resID = R.drawable.ic_acacia
-                        }
-                        "Miele di Eucalipto" -> {
-                            it1.resID = R.drawable.eucalipto
-                        }
-                        "Miele di Girasole" -> {
-                            it1.resID = R.drawable.girasole
-                        }
-                        "Miele di Agrumi" -> {
-                            it1.resID = R.drawable.agrumi
-                        }
-                        "Miele di Timo" -> {
-                            it1.resID = R.drawable.timo
-                        }
-                        "Miele di Tiglio" -> {
-                            it1.resID = R.drawable.tiglio
-                        }
-                        "Miele di Melata" -> {
-                            it1.resID = R.drawable.melata
-                        }
-                        "Miele di Sulla" -> {
-                            it1.resID = R.drawable.sulla
-                        }
-                        "Miele molto raro" -> {
-                            it1.resID = R.drawable.ic_altro
-                        }
+                        "Miele Millefiori" -> it1.resID = R.drawable.millefiori
+                        "Miele di Castagno" -> it1.resID = R.drawable.castagno
+                        "Miele di Acacia" -> it1.resID = R.drawable.ic_acacia
+                        "Miele di Eucalipto" -> it1.resID = R.drawable.eucalipto
+                        "Miele di Girasole" -> it1.resID = R.drawable.girasole
+                        "Miele di Agrumi" -> it1.resID = R.drawable.agrumi
+                        "Miele di Timo" -> it1.resID = R.drawable.timo
+                        "Miele di Tiglio" -> it1.resID = R.drawable.tiglio
+                        "Miele di Melata" -> it1.resID = R.drawable.melata
+                        "Miele di Sulla" -> it1.resID = R.drawable.sulla
+                        "Miele molto raro" -> it1.resID = R.drawable.ic_altro
                     }
                 }
-
             }
             adapter.setData(data)
             binding.apply { progressBar.progressBar.visibility = View.GONE }
@@ -135,6 +108,5 @@ class ScanboardFragment : Fragment(), OnScanListener {
             navController.navigate(ScanboardFragmentDirections.actionScanboardFragmentToHoneyInfoDialog())
         }
     }
-
 
 }

@@ -102,6 +102,7 @@
             android:id="@+id/aliasProfileTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"
             android:text=""
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -109,19 +110,22 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/scanProfileTxt"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameProfileTxt" />
 
         <TextView
             android:id="@+id/nameProfileTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
             android:layout_marginBottom="4dp"
             android:text=""
             android:textColor="@color/secondaryTextColor"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/aliasProfileTxt"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profileImg" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profileImg"
@@ -134,6 +138,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize"
             app:srcCompat="@drawable/femaleavatar"
             app:strokeColor="@color/secondaryTextColor"

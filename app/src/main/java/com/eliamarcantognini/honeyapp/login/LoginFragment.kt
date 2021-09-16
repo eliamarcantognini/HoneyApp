@@ -44,8 +44,8 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
             .requestServerAuthCode(getString(R.string.default_web_client_id))
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestScopes(Drive.SCOPE_APPFOLDER)
+//            .requestIdToken(getString(R.string.default_web_client_id))
+//            .requestScopes(Drive.SCOPE_APPFOLDER)
             .build()
         auth = FirebaseAuth.getInstance()
         viewModel = ViewModelProvider(requireActivity()).get(AccountViewModel::class.java)
@@ -87,7 +87,7 @@ class LoginFragment : Fragment() {
 
         // Haven't been signed-in before. Try the silent sign-in first.
         val signInClient = GoogleSignIn.getClient(activity, signInOptions)
-        Log.d("FIREBASELOG", "Sono nel login vero")
+//        Log.d("FIREBASELOG", "Sono nel login vero")
         signInClient
             .silentSignIn()
             .addOnCompleteListener(
@@ -127,13 +127,13 @@ class LoginFragment : Fragment() {
     }
 
     private fun firebaseAuthWithPlayGames(acct: GoogleSignInAccount) {
-        Log.d("FIREBASE", "firebaseAuthWithPlayGames:" + acct.id!!)
+//        Log.d("FIREBASE", "firebaseAuthWithPlayGames:" + acct.id!!)
 
         auth = FirebaseAuth.getInstance()
         val credential = PlayGamesAuthProvider.getCredential(acct.serverAuthCode!!)
-        Log.d("FIREBASEPROV", credential.provider)
-
-        Log.d("FIREBASETOKEN", acct.serverAuthCode!!)
+//        Log.d("FIREBASEPROV", credential.provider)
+//
+//        Log.d("FIREBASETOKEN", acct.serverAuthCode!!)
 
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
